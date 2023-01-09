@@ -11,4 +11,13 @@
   	<url-pattern>/add</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>pqr</servlet-name>
+  	<servlet-class>com.telusko.SqrServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>pqr</servlet-name>
+  	<url-pattern>/sqr</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
