@@ -20,10 +20,12 @@ public class AddServlet extends HttpServlet {
 		
 		// Session Management
 		
-		req.setAttribute("k", k);
+//		req.setAttribute("k", k);
 		
-		RequestDispatcher rd = req.getRequestDispatcher("sqr");
-		rd.forward(req, res);
+//		RequestDispatcher rd = req.getRequestDispatcher("sqr");
+//		rd.forward(req, res);
+		
+		res.sendRedirect("sqr?k=" + k);
 	}
 
 }
