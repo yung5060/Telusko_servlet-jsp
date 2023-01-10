@@ -5,9 +5,11 @@ import java.io.PrintWriter;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class AddServlet extends HttpServlet {
 
@@ -18,14 +20,22 @@ public class AddServlet extends HttpServlet {
 
 		int k = i + j;
 		
-		// Session Management
 		
 //		req.setAttribute("k", k);
 		
+		// 포워딩
 //		RequestDispatcher rd = req.getRequestDispatcher("sqr");
 //		rd.forward(req, res);
 		
-		res.sendRedirect("sqr?k=" + k);
+		// 세션 
+//		HttpSession session = req.getSession();
+//		session.setAttribute("k", k);
+		
+		Cookie cookie = new Cookie("k", Integer.toString(k));
+		res.addCookie(cookie);
+		
+//		res.sendRedirect("sqr?k=" + k);
+		res.sendRedirect("sqr");
 	}
 
 }
