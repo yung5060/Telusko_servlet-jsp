@@ -20,4 +20,29 @@
   	<url-pattern>/sqr</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>tmp</servlet-name>
+  	<servlet-class>com.telusko.MyServlet</servlet-class>
+  	
+  	<init-param>
+  		<param-name>name</param-name>
+  		<param-value>Minseok</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>tmp</servlet-name>
+  	<url-pattern>/home</url-pattern>
+  </servlet-mapping>
+  
+  <context-param>
+  	<param-name>name</param-name>
+  	<param-value>Yung</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>Phone</param-name>
+  	<param-value>iPhone</param-value>
+  </context-param>
+  
 </web-app>
