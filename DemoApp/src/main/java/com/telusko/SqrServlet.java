@@ -38,7 +38,9 @@ public class SqrServlet extends HttpServlet {
 		k = k * k;
 		
 		PrintWriter out = res.getWriter();
+		out.println("<html><body bgcolor='cyan'>");
 		out.println("Result is " + k);
+		out.println("</body></html>");
 		
 		System.out.println("sqr called");
 	}

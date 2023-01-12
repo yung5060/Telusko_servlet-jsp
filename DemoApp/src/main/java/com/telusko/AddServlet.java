@@ -33,11 +33,16 @@ public class AddServlet extends HttpServlet {
 //		HttpSession session = req.getSession();
 //		session.setAttribute("k", k);
 		
-		Cookie cookie = new Cookie("k", Integer.toString(k));
-		res.addCookie(cookie);
-		
+//		Cookie cookie = new Cookie("k", Integer.toString(k));
+//		res.addCookie(cookie);
+//		
 //		res.sendRedirect("sqr?k=" + k);
-		res.sendRedirect("sqr");
+//		res.sendRedirect("sqr");
+		
+		PrintWriter out = res.getWriter();
+		out.println("<html><body bgcolor='cyan'>");
+		out.println("Output : " + k);
+		out.println("</body></html>");
 	}
 
 }
