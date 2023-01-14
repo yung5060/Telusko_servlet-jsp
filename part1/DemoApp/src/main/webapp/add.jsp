@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Adding two numbers</title>
 </head>
 <body bgcolor="cyan">
 	<% 
@@ -12,8 +12,8 @@
 		int j = Integer.parseInt(request.getParameter("num2"));
 	
 		int k = i + j;
-
-		out.println("Output : " + k);
+ 
+		out.println("Output : " + k * k);
 	%>
 </body>
 </html>
