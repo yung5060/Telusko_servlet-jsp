@@ -12,10 +12,16 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%!
+            int coef = 3;
+        %>
+        
         <h1>Hello World!</h1>
         <%
             
             out.println(7+5);
         %>
+        <br>
+        My Fav Number is : <%= coef %>
     </body>
 </html>
