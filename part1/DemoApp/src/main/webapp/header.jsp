@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-
-<%@ page import="java.util.ArrayList" %>
-<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%= "Hello World! I'm the header.jsp" %>
 </body>
 </html>
