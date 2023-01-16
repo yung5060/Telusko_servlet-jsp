@@ -1,3 +1,5 @@
 *.metadata
 /part2/nbproject/private/
 /part2/build/
+
+*Server*
