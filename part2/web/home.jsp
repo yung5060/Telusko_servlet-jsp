@@ -19,7 +19,7 @@
         <h1>Hello World!</h1>
         <%
             
-            out.println(7+5);
+            out.println(7 + 5);
         %>
         <br>
         My Fav Number is : <%= coef %>
