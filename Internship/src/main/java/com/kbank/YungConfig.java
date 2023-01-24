@@ -1,21 +1,15 @@
 package com.kbank;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@ComponentScan({"com.kbank"})
-public class YungConfig {
+@EnableWebMvc
+@ComponentScan("com.kbank")
+public class YungConfig extends WebMvcConfigurerAdapter {
 	
-	@Bean
-	public InternalResourceViewResolver viewResolver() {
-		
-		InternalResourceViewResolver vr = new InternalResourceViewResolver();
-		vr.setPrefix("/WEB-INF/");
-		vr.setSuffix(".jsp");
-		
-		return vr;
-	}
+	
+	
 }
