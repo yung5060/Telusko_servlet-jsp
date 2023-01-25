@@ -19,5 +19,7 @@
 			</dataSource>
 		</environment>
 	</environments>
-	
+	<mappers>
+		<mapper resource="com/kbank/dao/EmployeeMapper.xml" />
+	</mappers>
 </configuration>

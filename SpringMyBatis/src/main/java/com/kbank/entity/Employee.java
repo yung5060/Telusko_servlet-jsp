@@ -15,22 +15,11 @@ public class Employee {
 	private String country;
 	
 	private String address;
-	
-	
-	public Employee() {
-		super();
-	}
 
-	public Employee(Integer id, String fullname, String email, String gender, String hobbies, String country,
-			String address) {
-		super();
-		this.id = id;
-		this.fullname = fullname;
-		this.email = email;
-		this.gender = gender;
-		this.hobbies = hobbies;
-		this.country = country;
-		this.address = address;
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", fullname=" + fullname + ", email=" + email + ", gender=" + gender
+				+ ", hobbies=" + hobbies + ", country=" + country + ", address=" + address + "]";
 	}
 
 	public Integer getId() {
@@ -88,12 +77,7 @@ public class Employee {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", fullname=" + fullname + ", email=" + email + ", gender=" + gender
-				+ ", hobbies=" + hobbies + ", country=" + country + ", address=" + address + "]";
-	}
+	
 	
 	
 }
