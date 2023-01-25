@@ -8,6 +8,7 @@ public class EmployeeController {
 
 	@RequestMapping("/")
 	public String index() {
+		System.out.println("index page called!");
 		return "list-employees";
 	}
 }
