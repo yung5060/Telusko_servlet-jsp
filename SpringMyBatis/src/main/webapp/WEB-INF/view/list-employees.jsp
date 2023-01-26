@@ -12,7 +12,7 @@
 	<h1>List Employees</h1>
 
 	<div>
-		<table>
+		<table border="1">
 			<tr>
 				<th>Full Name</th>
 				<th>Email</th>
@@ -22,12 +22,14 @@
 				<th>Address</th>
 			</tr>
 			<c:forEach items="${listemployees}" var="e">
-				<td>${e.fullname}</td>
-				<td>${e.email}</td>
-				<td>${e.gender}</td>
-				<td>${e.hobbies}</td>
-				<td>${e.country}</td>
-				<td>${e.address}</td>
+				<tr>
+					<td>${e.fullname}</td>
+					<td>${e.email}</td>
+					<td>${e.gender}</td>
+					<td>${e.hobbies}</td>
+					<td>${e.country}</td>
+					<td>${e.address}</td>
+				</tr>
 			</c:forEach>
 		</table>
 	</div>

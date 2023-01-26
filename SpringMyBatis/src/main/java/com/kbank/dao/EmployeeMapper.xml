@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.bushansirgur.dao.EmployeeMapper">
-	
+
 	<resultMap type="employee" id="result">
-		
+
 		<id property="id" column="id" />
 		<result property="fulname" column="fulname" />
 		<result property="email" column="email" />
@@ -13,13 +13,20 @@
 		<result property="hobbies" column="hobbies" />
 		<result property="country" column="country" />
 		<result property="address" column="address" />
-		
+
 	</resultMap>
-	
-	<select id="getAllEmployees" resultType="employee" resultMap="result">
-	
+
+	<select id="getAllEmployees" resultType="employee"
+		resultMap="result">
+
 		SELECT * FROM employee
-	
+
 	</select>
+
+	<insert id="insertEmployee" parameterType="employee"
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO employee (fullname, email, gender, hobbies, country, address)
+		VALUES (#{fullname}, #{email}, #{gender}, #{hobbies}, #{country}, #{address} );
+	</insert>
 
 </mapper>

@@ -18,3 +18,6 @@ CREATE TABLE employee (
 	
 	address VARCHAR(50) NOT NULL
 );
+
+INSERT INTO employee (fullname, email, gender, hobbies, country, address)
+VALUES ('Yung', 'yung.cho@kbanknow.com', 'Male', 'Binge-Watching', 'Korea', 'Hanam');
