@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.kbank.entity.Employee;
 import com.kbank.util.MyBatisUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class EmployeeMapper {
 
         public List<Employee> getAllEmployees() {

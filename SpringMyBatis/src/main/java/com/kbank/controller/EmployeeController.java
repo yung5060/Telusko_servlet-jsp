@@ -12,8 +12,8 @@ import com.kbank.entity.Employee;
 @Controller
 public class EmployeeController {
 	
-	@Autowired
-	EmployeeMapper mapper;
+    @Autowired
+	private EmployeeMapper mapper;
 
 	@RequestMapping("/")
 	public ModelAndView index() {
