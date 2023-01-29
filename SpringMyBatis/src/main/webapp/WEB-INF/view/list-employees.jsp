@@ -10,7 +10,8 @@
 </head>
 <body>
 	<h1>List Employees</h1>
-    <button onclick="window.location.href = 'showFormForAddEmployee.html' ">Add Employee</button>
+	<button onclick="window.location.href = 'showFormForAddEmployee.html' ">Add
+		Employee</button>
 	<div>
 		<table border="1">
 			<tr>
@@ -20,8 +21,16 @@
 				<th>Hobbies</th>
 				<th>Country</th>
 				<th>Address</th>
+				<th>Actions</th>
 			</tr>
 			<c:forEach items="${listemployees}" var="e">
+
+				<c:url var="deleteLink" value="/deleteEmployee">
+
+					<c:param name="employeeId" value="${e.id}" />
+
+				</c:url>
+
 				<tr>
 					<td>${e.fullname}</td>
 					<td>${e.email}</td>
@@ -29,6 +38,8 @@
 					<td>${e.hobbies}</td>
 					<td>${e.country}</td>
 					<td>${e.address}</td>
+					<td><a href="${deleteLink}"
+						onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
