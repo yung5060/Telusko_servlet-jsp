@@ -47,7 +47,7 @@ public class EmployeeController {
     @RequestMapping("/deleteEmployee")
     public String deleteEmployee(@RequestParam("employeeId") int employeeId) {
         
-        System.out.println("EmployeeId : " + employeeId);
+        mapper.deleteEmployee(employeeId);
         
         return "redirect:/";
     }
