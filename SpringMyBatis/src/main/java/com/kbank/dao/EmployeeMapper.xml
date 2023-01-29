@@ -40,5 +40,12 @@
 	   SELECT * FROM employee WHERE id = #{employeeId};
 	   
 	</select>
+	
+	<update id="updateEmployee" parameterType="employee">
+	   
+	   UPDATE employee SET fullname = #{fullname}, email = #{email}, gender = #{gender}, hobbies = #{hobbies}, country = #{country}, address = #{address}
+	   WHERE id = #{id};
+	   
+	</update>
 
 </mapper>

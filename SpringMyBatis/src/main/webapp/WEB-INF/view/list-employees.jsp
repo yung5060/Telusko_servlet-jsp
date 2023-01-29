@@ -23,7 +23,7 @@
 				<th>Address</th>
 				<th>Actions</th>
 			</tr>
-			<c:forEach items="${listemployees}" var="e">
+			<c:forEach items="${employeeList}" var="e">
 
 				<c:url var="deleteLink" value="/deleteEmployee">
 

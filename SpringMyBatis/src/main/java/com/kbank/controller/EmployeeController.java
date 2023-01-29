@@ -19,7 +19,7 @@ public class EmployeeController {
     @RequestMapping("/")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("list-employees");
-        mv.addObject("listemployees", mapper.getAllEmployees());
+        mv.addObject("employeeList", mapper.getAllEmployees());
         return mv;
     }
 
@@ -39,8 +39,15 @@ public class EmployeeController {
 
     @RequestMapping("/saveProcess")
     public String saveProcess(@ModelAttribute("employee") Employee employee) {
-
-        mapper.saveEmployee(employee);
+        
+        if(employee.getId() == null) {
+            //save-operation
+            mapper.saveEmployee(employee);
+        } else {
+            //update-operation
+            mapper.updateEmployee(employee);
+        }
+        
         return "redirect:/";
     }
 
