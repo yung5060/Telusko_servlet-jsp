@@ -30,6 +30,12 @@
 					<c:param name="employeeId" value="${e.id}" />
 
 				</c:url>
+				
+				<c:url var="updateLink" value="/updateEmployee">
+
+                    <c:param name="employeeId" value="${e.id}" />
+
+                </c:url>
 
 				<tr>
 					<td>${e.fullname}</td>
@@ -38,7 +44,9 @@
 					<td>${e.hobbies}</td>
 					<td>${e.country}</td>
 					<td>${e.address}</td>
-					<td><a href="${deleteLink}"
+					<td>
+					<a href="${updateLink}">Update</a>  |
+					<a href="${deleteLink}"
 						onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a></td>
 				</tr>
 			</c:forEach>

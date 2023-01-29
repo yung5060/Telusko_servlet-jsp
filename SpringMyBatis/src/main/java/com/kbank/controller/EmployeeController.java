@@ -51,4 +51,12 @@ public class EmployeeController {
         
         return "redirect:/";
     }
+    
+    @RequestMapping("/updateEmployee")
+    public String updateEmployee(@RequestParam("employeeId") int employeeId) {
+        
+        System.out.println("EmployeeId : " + employeeId);
+        
+        return "redirect:/";
+    }
 }
