@@ -34,5 +34,11 @@
 	<delete id="deleteEmployee" parameterType="int">
 	   DELETE FROM employee WHERE id = #{employeeId};
 	</delete>
+	
+	<select id="findById" parameterType="int" resultType="employee" resultMap="result">
+	   
+	   SELECT * FROM employee WHERE id = #{employeeId};
+	   
+	</select>
 
 </mapper>

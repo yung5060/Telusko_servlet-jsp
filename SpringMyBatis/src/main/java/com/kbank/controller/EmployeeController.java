@@ -53,10 +53,12 @@ public class EmployeeController {
     }
     
     @RequestMapping("/updateEmployee")
-    public String updateEmployee(@RequestParam("employeeId") int employeeId) {
+    public ModelAndView updateEmployee(@RequestParam("employeeId") int employeeId) {
         
-        System.out.println("EmployeeId : " + employeeId);
+        ModelAndView mv = new ModelAndView("add-employee");
+        Employee employee = mapper.findById(employeeId);
+        mv.addObject("employee", employee);
         
-        return "redirect:/";
+        return mv;
     }
 }
