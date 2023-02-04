@@ -2,7 +2,7 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias type="com.kbank.entity.Whitelist" alias="whitelist" />
+        <typeAlias type="com.kbank.entity.yung.Whitelist" alias="whitelist" />
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -16,6 +16,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/kbank/dao/WhitelistMapper.xml" />
+        <mapper resource="com/kbank/yung/dao/WhitelistMapper.xml" />
     </mappers>
 </configuration>

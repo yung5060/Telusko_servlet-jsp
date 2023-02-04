@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.kbank.yung.dao.WhitelistMapper">
+    
+    <resultMap type="whitelist" id="result">
+        <result property="UMS_VAL" column="UMS_VAL" />
+        <result property="CUST_INFO" column="CUST_INFO" />
+        <result property="CREATED_AT" column="CREATED_AT" />
+    </resultMap>
+    
+    
+    
+</mapper>
