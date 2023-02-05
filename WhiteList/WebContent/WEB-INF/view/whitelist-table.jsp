@@ -25,7 +25,6 @@
 					<td>${e.UMS_VAL}</td>
 					<td>${e.CUST_INFO}</td>
 					<td>${e.CREATED_AT}</td>
-					<td>
 				</tr>
 			</c:forEach>
 		</table>
