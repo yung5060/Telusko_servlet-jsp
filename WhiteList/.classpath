@@ -12,6 +12,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Yung"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Kbank_UMS_Whitelist"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
