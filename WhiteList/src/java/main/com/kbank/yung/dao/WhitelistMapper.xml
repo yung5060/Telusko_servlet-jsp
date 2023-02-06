@@ -13,4 +13,13 @@
 	<select id="getAllWhiteMembers" resultType="whitelist" resultMap="result">
 		SELECT * FROM tb_cust_white_list
 	</select>
+	
+	<insert id="insertWhiteMember" parameterType="whitelist">
+		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO)
+		VALUES (#{UMS_VAL}, #{CUST_INFO});
+	</insert>
+	
+	<delete id="deleteWhiteMember" parameterType="whitelist">
+		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO} AND UMS_VAL = #{UMS_VAL};
+	</delete>
 </mapper>
