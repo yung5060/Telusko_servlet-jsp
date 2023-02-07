@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="WhiteList">
+        
+    <wb-module deploy-name="UMS-Whitelist-Manager">
+                
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java/main"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java/test"/>
-        <property name="context-root" value="WhiteList"/>
-        <property name="java-output-path" value="/WhiteList/build/classes"/>
+                
+        <property name="java-output-path" value="/UMS-Whitelist-Manager/build/classes"/>
+        <property name="context-root" value="UMS-Whitelist-Manager"/>
+            
     </wb-module>
+    
 </project-modules>

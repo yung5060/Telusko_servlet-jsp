@@ -11,7 +11,7 @@
 	</resultMap>
 	
 	<select id="getAllWhiteMembers" resultType="whitelist" resultMap="result">
-		SELECT * FROM tb_cust_white_list
+		SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC;
 	</select>
 	
 	<insert id="insertWhiteMember" parameterType="whitelist">

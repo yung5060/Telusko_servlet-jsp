@@ -1,12 +1,12 @@
 package com.kbank.yung.entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Whitelist {
 	
 	private String UMS_VAL;
 	private String CUST_INFO;
-	private Timestamp CREATED_AT;
+	private Date CREATED_AT;
 	
 	
 	public String getUMS_VAL() {
@@ -21,12 +21,14 @@ public class Whitelist {
 	public void setCUST_INFO(String cUST_INFO) {
 		CUST_INFO = cUST_INFO;
 	}
-	public Timestamp getCREATED_AT() {
+	public Date getCREATED_AT() {
 		return CREATED_AT;
 	}
-	public void setCREATED_AT(Timestamp cREATED_AT) {
+	public void setCREATED_AT(Date cREATED_AT) {
 		CREATED_AT = cREATED_AT;
 	}
+	
+	
 	
 	
 }
