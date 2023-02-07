@@ -10,6 +10,7 @@
 </head>
 <body>
 	<h1>UMS WhiteList Manager</h1>
+	<button onclick="window.location.href = 'showFormForAddWhiteMember.html' " >UMS 화이트리스트 추가하기</button>
 	<div>
 		<table border="1">
 			<tr>
@@ -18,10 +19,17 @@
 				<th>CREATED_AT</th>
 			</tr>
 			<c:forEach items="${whitelist}" var="e">
+				<c:url var="deleteLink" value="/deleteWhiteMember">
+					<c:param name="umsCode" value="${e.UMS_VAL}"></c:param>
+					<c:param name="custInfo" value="${e.CUST_INFO}"></c:param>
+				</c:url>
 				<tr>
 					<td>${e.UMS_VAL}</td>
 					<td>${e.CUST_INFO}</td>
 					<td>${e.CREATED_AT}</td>
+					<td>
+						<a href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
