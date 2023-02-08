@@ -20,4 +20,12 @@ public class WhitelistMapper {
 		
 		return whitelist;
 	}
+	
+	public void saveWhiteMember(Whitelist whitelist) {
+		
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		session.insert("insertWhiteMember", whitelist);
+		session.commit();
+		session.close();
+	}
 }

@@ -15,8 +15,7 @@
 	</select>
 	
 	<insert id="insertWhiteMember" parameterType="whitelist">
-		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO)
-		VALUES (#{UMS_VAL}, #{CUST_INFO});
+		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO) VALUES (#{UMS_VAL}, #{CUST_INFO});
 	</insert>
 	
 	<delete id="deleteWhiteMember" parameterType="whitelist">
