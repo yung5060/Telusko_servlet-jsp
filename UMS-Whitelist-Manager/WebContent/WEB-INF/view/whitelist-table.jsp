@@ -20,7 +20,7 @@
 			</tr>
 			<c:forEach items="${whitelist}" var="e">
 				<c:url var="deleteLink" value="/deleteWhiteMember">
-					<c:param name="umsCode" value="${e.UMS_VAL}"></c:param>
+					<c:param name="umsVal" value="${e.UMS_VAL}"></c:param>
 					<c:param name="custInfo" value="${e.CUST_INFO}"></c:param>
 				</c:url>
 				<tr>

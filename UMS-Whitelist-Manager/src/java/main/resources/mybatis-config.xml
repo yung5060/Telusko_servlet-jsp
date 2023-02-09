@@ -6,6 +6,7 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.kbank.yung.entity.Whitelist" alias="whitelist" />
+        <typeAlias type="com.kbank.yung.dto.WhitelistDto" alias="whitelistDto" />
     </typeAliases>
     <environments default="development">
         <environment id="development">

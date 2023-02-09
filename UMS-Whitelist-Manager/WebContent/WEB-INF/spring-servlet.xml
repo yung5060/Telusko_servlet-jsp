@@ -18,5 +18,6 @@
 	
 	<bean class="com.kbank.yung.controller.WhitelistController" />
 	<bean class="com.kbank.yung.dao.WhitelistMapper" />
+	<bean class="com.kbank.yung.service.WhitelistService" />
 
 </beans>
