@@ -14,6 +14,18 @@
 		SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC;
 	</select>
 	
+	<select id="countWhiteMembers" resultType="int">
+		SELECT COUNT(*) FROM tb_cust_white_list
+	</select>
+	
+	<select id="getWhiteMembersPerPage" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
+		SELECT B.* FROM (
+			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
+				SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
+			) A, (SELECT @ROWNUM:=0) C
+		) B WHERE RN LIMIT #{start}, #{end}
+	</select>
+	
 	<insert id="insertWhiteMember" parameterType="whitelist">
 		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO) VALUES (#{UMS_VAL}, #{CUST_INFO});
 	</insert>

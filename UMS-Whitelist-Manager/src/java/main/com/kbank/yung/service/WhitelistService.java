@@ -1,17 +1,28 @@
 package com.kbank.yung.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kbank.yung.dao.WhitelistMapper;
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.entity.Whitelist;
+import com.kbank.yung.util.PagingVO;
 
 @Service
 public class WhitelistService {
 
 	@Autowired
 	WhitelistMapper mapper;
+	
+	public int countWhiteMembers() {
+		return mapper.countWhiteMembers();
+	}
+	
+	public List<Whitelist> getWhiteMembersPerPage(PagingVO paging) {
+		return mapper.getWhiteMembersPerPage(paging);
+	}
 	
 	public void saveWhiteMember(WhitelistDto whitelistDto) {
 		
