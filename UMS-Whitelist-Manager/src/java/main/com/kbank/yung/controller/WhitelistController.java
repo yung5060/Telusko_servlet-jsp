@@ -35,7 +35,6 @@ public class WhitelistController {
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
 		int total = service.countWhiteMembers();
-		System.out.println(total);
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";

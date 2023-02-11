@@ -28,11 +28,11 @@
 	<script>
 		function selChange() {
 			var sel = document.getElementById('cntPerPage').value;
-			location.href="boardList?nowPage=${paging.nowPage}&cntPerPage="+sel;
+			location.href="list?nowPage=${paging.nowPage}&cntPerPage="+sel;
 		}
 	</script>
 <body>
-<h2>게시판</h2>
+<h2>UMS 화이트리스트 관리자</h2>
 
 <div id="outter">
 	<div style="float: right;">
@@ -65,7 +65,7 @@
 	
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
-			<a href="/list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+			<a href="list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
 		</c:if>
 		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 			<c:choose>
@@ -73,12 +73,12 @@
 					<b>${p }</b>
 				</c:when>
 				<c:when test="${p != paging.nowPage }">
-					<a href="/list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
+					<a href="list?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
 				</c:when>
 			</c:choose>
 		</c:forEach>
 		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
+			<a href="list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
 		</c:if>
 	</div>
 </div>
