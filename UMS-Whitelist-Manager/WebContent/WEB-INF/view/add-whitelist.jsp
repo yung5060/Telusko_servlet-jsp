@@ -16,16 +16,16 @@
 		
 		전화번호 : <s:input path="phoneNumber"/><br>
 		채널코드 : <br>
-		<s:checkbox path="channelCodes" value="K"/>K<br>
-		<s:checkbox path="channelCodes" value="L"/>L<br>
-		<s:checkbox path="channelCodes" value="M"/>M<br>
-		<s:checkbox path="channelCodes" value="S"/>S<br>
+		<s:checkbox path="channelCodes" value="K" checked="checked" />K<br>
+		<s:checkbox path="channelCodes" value="L" checked="checked" />L<br>
+		<s:checkbox path="channelCodes" value="M" checked="checked" />M<br>
+		<s:checkbox path="channelCodes" value="S" checked="checked" />S<br>
 		
 		<input type="submit" value="저장하기" />
 		
 	</s:form>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script>
 	
 	   $(document).ready(function(){
@@ -43,7 +43,7 @@
 		   
 	   });
 	
-	</script>
+	</script>  -->
 	
 </body>
 </html>

@@ -35,6 +35,10 @@
 <h2>UMS 화이트리스트 관리자</h2>
 
 <div id="outter">
+	<form action="<c:url value="list/search" />">
+		<input type="text" name="freeText" placeholder="전화번호를 입력하세요" />
+		<button>검색하기</button>
+	</form>
 	<div style="float: right;">
 		<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="5"
