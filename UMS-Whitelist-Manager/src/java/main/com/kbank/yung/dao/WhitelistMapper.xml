@@ -19,10 +19,10 @@
 	</select>
 	
 	<select id="getWhiteMembersPerPage" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
-		SELECT B.* FROM (
+		SELECT B.UMS_VAL, B.CUST_INFO, B.CREATED_AT FROM (
 			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
 				SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
-			) A, (SELECT @ROWNUM:=0) C
+			) A, (SELECT @ROWNUM:=0) TMP
 		) B WHERE RN LIMIT #{start}, #{end}
 	</select>
 	
