@@ -54,7 +54,7 @@ public class WhitelistController {
 	public ModelAndView showForm() {
 		
 		ModelAndView mv = new ModelAndView("add-whitelist");
-		mv.addObject("whitelistDto", new WhitelistDto("K,L,M,S"));
+		mv.addObject("whitelistDto", new WhitelistDto());
 		return mv;
 	}
 	
@@ -63,7 +63,7 @@ public class WhitelistController {
 		
 		service.saveWhiteMember(whitelistDto);
 		
-		return "redirect:/";
+		return "redirect:/list";
 	}
 	
 	@RequestMapping("/deleteWhiteMember")
@@ -71,6 +71,6 @@ public class WhitelistController {
 		
 		service.deleteWhiteMember(umsVal, custInfo);
 		
-		return "redirect:/";
+		return "redirect:/list";
 	}
 }

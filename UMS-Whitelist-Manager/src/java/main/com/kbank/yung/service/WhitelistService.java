@@ -34,6 +34,7 @@ public class WhitelistService {
 				mapper.saveWhiteMember(whitelist);
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println(e.toString());
 			}
 		}
 	}

@@ -35,6 +35,8 @@
 <h2>UMS 화이트리스트 관리자</h2>
 
 <div id="outter">
+	<button onclick="window.location.href = 'showFormForAddWhiteMember.html' " >UMS 화이트리스트 추가하기</button>
+	<br>
 	<form action="<c:url value="list/search" />">
 		<input type="text" name="freeText" placeholder="전화번호를 입력하세요" />
 		<button>검색하기</button>

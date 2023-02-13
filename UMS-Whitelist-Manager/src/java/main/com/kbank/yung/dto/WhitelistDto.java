@@ -9,6 +9,13 @@ public class WhitelistDto {
 		super();
 		this.channelCodes = channelCodes;
 	}
+	
+	
+	public WhitelistDto() {
+		super();
+	}
+
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}

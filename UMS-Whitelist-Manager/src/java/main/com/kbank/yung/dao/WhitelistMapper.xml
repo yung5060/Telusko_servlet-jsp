@@ -11,7 +11,7 @@
 	</resultMap>
 	
 	<select id="getAllWhiteMembers" resultType="whitelist" resultMap="result">
-		SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC;
+		SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
 	</select>
 	
 	<select id="countWhiteMembers" resultType="int">
@@ -27,10 +27,10 @@
 	</select>
 	
 	<insert id="insertWhiteMember" parameterType="whitelist">
-		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO) VALUES (#{UMS_VAL}, #{CUST_INFO});
+		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO) VALUES (#{UMS_VAL}, #{CUST_INFO})
 	</insert>
 	
 	<delete id="deleteWhiteMember" parameterType="whitelist">
-		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO} AND UMS_VAL = #{UMS_VAL};
+		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO} AND UMS_VAL = #{UMS_VAL}
 	</delete>
 </mapper>
