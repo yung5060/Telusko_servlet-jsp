@@ -8,27 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kbank.yung.dao.WhitelistMapper;
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.service.WhitelistService;
+import com.kbank.yung.util.PagingSearchVO;
 import com.kbank.yung.util.PagingVO;
 
 @Controller
 public class WhitelistController {
 	
 	@Autowired
-	WhitelistMapper mapper;
-	
-	@Autowired
 	WhitelistService service;
 
-	@RequestMapping("/")
-	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("whitelist-table");
-		mv.addObject("whitelist", mapper.getAllWhiteMembers());
-		return mv;
-	}
-	
 	@RequestMapping("/list")
 	public String list(PagingVO vo, Model model
 			, @RequestParam(value="nowPage", required=false)String nowPage
@@ -46,6 +36,28 @@ public class WhitelistController {
 		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", service.getWhiteMembersPerPage(vo));
+		
+		return "whitelist-table-paging";
+	}
+	
+	@RequestMapping("/search")
+	public String search(PagingSearchVO vo, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
+			, @RequestParam(value="searchNumber", required=true)String searchNumber) {
+		
+		int total = service.countSearch(searchNumber);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "20";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "20";
+		}
+		vo = new PagingSearchVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), searchNumber);
+		model.addAttribute("paging", vo);
+		model.addAttribute("viewAll", service.getWhiteMembersSearch(vo));
 		
 		return "whitelist-table-paging";
 	}

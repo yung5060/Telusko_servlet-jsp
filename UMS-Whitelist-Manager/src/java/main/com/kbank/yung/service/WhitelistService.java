@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kbank.yung.dao.WhitelistMapper;
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.entity.Whitelist;
+import com.kbank.yung.util.PagingSearchVO;
 import com.kbank.yung.util.PagingVO;
 
 @Service
@@ -20,8 +21,16 @@ public class WhitelistService {
 		return mapper.countWhiteMembers();
 	}
 	
+	public int countSearch(String searchNumber) {
+		return mapper.countSearch(searchNumber);
+	}
+	
 	public List<Whitelist> getWhiteMembersPerPage(PagingVO paging) {
 		return mapper.getWhiteMembersPerPage(paging);
+	}
+	
+	public List<Whitelist> getWhiteMembersSearch(PagingSearchVO paging) {
+		return mapper.getWhiteMembersSearch(paging);
 	}
 	
 	public void saveWhiteMember(WhitelistDto whitelistDto) {
