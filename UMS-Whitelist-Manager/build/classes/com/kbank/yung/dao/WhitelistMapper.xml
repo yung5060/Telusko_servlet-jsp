@@ -11,10 +11,10 @@
 	</resultMap>
 	
 	<select id="getAllWhiteMembers" resultType="whitelist" resultMap="result">
-		SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
+		SELECT * FROM tb_cust_white_list ORDER BY CUST_INFO ASC, UMS_VAL ASC
 	</select>
 	
-	<select id="countWhiteMembers" resultType="int">
+	<select id="countAll" resultType="int">
 		SELECT COUNT(*) FROM tb_cust_white_list
 	</select>
 	
@@ -22,18 +22,18 @@
 		SELECT COUNT(*) FROM tb_cust_white_list WHERE CUST_INFO LIKE CONCAT('%',#{searchNumber},'%')
 	</select>
 	
-	<select id="getWhiteMembersPerPage" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
+	<select id="getWhiteMembersAll" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
 		SELECT B.UMS_VAL, B.CUST_INFO, B.CREATED_AT FROM (
 			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
-				SELECT * FROM tb_cust_white_list ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
+				SELECT * FROM tb_cust_white_list ORDER BY CUST_INFO ASC, UMS_VAL ASC
 			) A, (SELECT @ROWNUM:=0) TMP
 		) B WHERE RN LIMIT #{start}, #{end}
 	</select>
 	
-	<select id="getWhiteMembersSearch" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingSearchVO">
+	<select id="getWhiteMembersSearch" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
 		SELECT B.UMS_VAL, B.CUST_INFO, B.CREATED_AT FROM (
 			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
-				SELECT * FROM tb_cust_white_list WHERE CUST_INFO LIKE CONCAT('%',#{searchNumber},'%') ORDER BY CREATED_AT DESC, CUST_INFO ASC, UMS_VAL ASC
+				SELECT * FROM tb_cust_white_list WHERE CUST_INFO LIKE CONCAT('%',#{searchNumber},'%') ORDER BY CUST_INFO ASC, UMS_VAL ASC
 			) A, (SELECT @ROWNUM:=0) TMP
 		) B WHERE RN LIMIT #{start}, #{end}
 	</select>
@@ -43,6 +43,6 @@
 	</insert>
 	
 	<delete id="deleteWhiteMember" parameterType="whitelist">
-		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO} AND UMS_VAL = #{UMS_VAL}
+		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO}
 	</delete>
 </mapper>

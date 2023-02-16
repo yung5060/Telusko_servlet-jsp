@@ -7,17 +7,16 @@ import org.springframework.stereotype.Repository;
 
 import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.util.MyBatisUtil;
-import com.kbank.yung.util.PagingSearchVO;
 import com.kbank.yung.util.PagingVO;
 
 @Repository
 public class WhitelistMapper {
 	
 	
-	public int countWhiteMembers() {
+	public int countAll() {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		int count = (int) session.selectOne("countWhiteMembers");
+		int count = (int) session.selectOne("countAll");
 		session.commit();
 		session.close();
 		return count;
@@ -32,16 +31,16 @@ public class WhitelistMapper {
 		return count;
 	}
 	
-	public List<Whitelist> getWhiteMembersPerPage(PagingVO paging) {
+	public List<Whitelist> getWhiteMembersAll(PagingVO paging) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		List<Whitelist> whitelist = session.selectList("getWhiteMembersPerPage", paging);
+		List<Whitelist> whitelist = session.selectList("getWhiteMembersAll", paging);
 		session.commit();
 		session.close();
 		return whitelist;
 	}
 	
-	public List<Whitelist> getWhiteMembersSearch(PagingSearchVO paging) {
+	public List<Whitelist> getWhiteMembersSearch(PagingVO paging) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Whitelist> whitelist = session.selectList("getWhiteMembersSearch", paging);

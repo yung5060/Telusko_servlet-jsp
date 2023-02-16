@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.service.WhitelistService;
-import com.kbank.yung.util.PagingSearchVO;
 import com.kbank.yung.util.PagingVO;
 
 @Controller
@@ -22,9 +21,10 @@ public class WhitelistController {
 	@RequestMapping("/list")
 	public String list(PagingVO vo, Model model
 			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
+			, @RequestParam(value="searchNumber", required=false)String searchNumber) {
 		
-		int total = service.countWhiteMembers();
+		int total = 0;
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "20";
@@ -33,34 +33,20 @@ public class WhitelistController {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "20";
 		}
-		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", service.getWhiteMembersPerPage(vo));
+		if (searchNumber == null) {
+			total = service.countAll();
+			vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		} else {
+			total = service.countSearch(searchNumber);
+			vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), searchNumber);
+		}
 		
-		return "whitelist-table-paging";
+		model.addAttribute("paging", vo);
+		model.addAttribute("viewAll", service.getWhiteMembersAllOrSearch(vo));
+		
+		return "whitelist-table";
 	}
 	
-	@RequestMapping("/search")
-	public String search(PagingSearchVO vo, Model model
-			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
-			, @RequestParam(value="searchNumber", required=true)String searchNumber) {
-		
-		int total = service.countSearch(searchNumber);
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "20";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) { 
-			cntPerPage = "20";
-		}
-		vo = new PagingSearchVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), searchNumber);
-		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", service.getWhiteMembersSearch(vo));
-		
-		return "whitelist-table-paging";
-	}
 	
 	@RequestMapping("/showFormForAddWhiteMember")
 	public ModelAndView showForm() {
@@ -78,11 +64,15 @@ public class WhitelistController {
 		return "redirect:/list";
 	}
 	
-	@RequestMapping("/deleteWhiteMember")
-	public String deleteWhiteMember(@RequestParam("umsVal") String umsVal, @RequestParam("custInfo") String custInfo) {
+	@RequestMapping("/deleteProcess")
+	public String deleteWhiteMember(@RequestParam("custInfo") String custInfo
+			, @RequestParam(value="searchNumber", required=false)String searchNumber) {
 		
-		service.deleteWhiteMember(umsVal, custInfo);
-		
-		return "redirect:/list";
+		service.deleteWhiteMember(custInfo);
+		if (searchNumber != null) {
+			return "redirect:/list?searchNumber=" + searchNumber;
+		} else {
+			return "redirect:/list";
+		}
 	}
 }
