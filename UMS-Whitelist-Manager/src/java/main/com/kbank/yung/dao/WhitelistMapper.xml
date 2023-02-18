@@ -5,13 +5,13 @@
 
 <mapper namespace="com.kbank.yung.dao.WhitelistMapper">
 	<resultMap type="whitelist" id="result">
-		<result property="UMS_VAL" column="UMS_VAL" />
+		<result property="CHNL_DV_CD" column="CHNL_DV_CD" />
 		<result property="CUST_INFO" column="CUST_INFO" />
-		<result property="CREATED_AT" column="CREATED_AT" />
+		<result property="PPRT_DTM" column="PPRT_DTM" />
 	</resultMap>
 	
 	<select id="getAllWhiteMembers" resultType="whitelist" resultMap="result">
-		SELECT * FROM tb_cust_white_list ORDER BY CUST_INFO ASC, UMS_VAL ASC
+		SELECT * FROM tb_cust_white_list ORDER BY CUST_INFO ASC, CHNL_DV_CD ASC
 	</select>
 	
 	<select id="countAll" resultType="int">
@@ -19,30 +19,44 @@
 	</select>
 	
 	<select id="countSearch" resultType="int" parameterType="String">
-		SELECT COUNT(*) FROM tb_cust_white_list WHERE CUST_INFO LIKE CONCAT('%',#{searchNumber},'%')
+		SELECT COUNT(*) FROM tb_cust_white_list WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
 	</select>
 	
 	<select id="getWhiteMembersAll" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
-		SELECT B.UMS_VAL, B.CUST_INFO, B.CREATED_AT FROM (
-			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
-				SELECT * FROM tb_cust_white_list ORDER BY CUST_INFO ASC, UMS_VAL ASC
-			) A, (SELECT @ROWNUM:=0) TMP
-		) B WHERE RN LIMIT #{start}, #{end}
+		SELECT B.CHNL_DV_CD, B.CUST_INFO, B.PPRT_DTM FROM (
+			SELECT ROWNUM RN, A.* FROM (
+				SELECT * FROM TB_CUST_WHITE_LIST ORDER BY CUST_INFO ASC, CHNL_DV_CD ASC
+			) A
+		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="getWhiteMembersSearch" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
-		SELECT B.UMS_VAL, B.CUST_INFO, B.CREATED_AT FROM (
-			SELECT @ROWNUM:=@ROWNUM+1 RN, A.* FROM (
-				SELECT * FROM tb_cust_white_list WHERE CUST_INFO LIKE CONCAT('%',#{searchNumber},'%') ORDER BY CUST_INFO ASC, UMS_VAL ASC
-			) A, (SELECT @ROWNUM:=0) TMP
-		) B WHERE RN LIMIT #{start}, #{end}
+		SELECT B.CHNL_DV_CD, B.CUST_INFO, B.PPRT_DTM FROM (
+			SELECT ROWNUM RN, A.* FROM (
+				SELECT * FROM TB_CUST_WHITE_LIST WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%' ORDER BY CUST_INFO ASC, CHNL_DV_CD ASC
+			) A
+		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
-	<insert id="insertWhiteMember" parameterType="whitelist">
-		INSERT INTO tb_cust_white_list (UMS_VAL, CUST_INFO) VALUES (#{UMS_VAL}, #{CUST_INFO})
+	<insert id="insertMember" parameterType="whitelist">
+		INSERT INTO tb_cust_white_list (CHNL_DV_CD, CUST_INFO) VALUES (#{CHNL_DV_CD}, #{CUST_INFO})
 	</insert>
 	
-	<delete id="deleteWhiteMember" parameterType="whitelist">
+	<insert id="insertByText" parameterType="java.lang.String">
+		INSERT INTO TB_CUST_WHITE_LIST(CUST_INFO, CHNL_DV_CD, PPRT_DTM) (
+    		SELECT REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','') CUST_INFO,
+    		DECODE (LEVEL,1,'S',2,'L',3,'M',4,'K',Level) CHNL_DV_CD,
+    		SYSDATE AS PPRT_DTM
+    		FROM TB_CUST_WHITE_LIST
+    		CONNECT BY LEVEL <![CDATA[<=]]> 4
+    		MINUS
+    		SELECT CUST_INFO, CHNL_DV_CD, SYSDATE AS PPRT_DTM
+    		FROM TB_CUST_WHITE_LIST
+    		WHERE CUST_INFO = REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','')
+		)
+	</insert>
+	
+	<delete id="deleteMember" parameterType="whitelist">
 		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO}
 	</delete>
 </mapper>

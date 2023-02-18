@@ -10,19 +10,12 @@
 </head>
 <body>
 	<h1>UMS 화이트리스트 추가</h1>
-	<s:form modelAttribute="whitelistDto" action="saveProcess">
+	
+	<s:form modelAttribute="addByTextDto" action="saveByText">
 		
-		<input type="hidden" value="${whitelistDto.channelCodes}" id="hiddenTxt" />
+		<s:textarea path="phoneNumbers" rows="20" cols="40" />
 		
-		전화번호 : <s:input path="phoneNumber"/><br>
-		채널코드 : <br>
-		<s:checkbox path="channelCodes" value="K" checked="checked" />K<br>
-		<s:checkbox path="channelCodes" value="L" checked="checked" />L<br>
-		<s:checkbox path="channelCodes" value="M" checked="checked" />M<br>
-		<s:checkbox path="channelCodes" value="S" checked="checked" />S<br>
-		
-		<input type="submit" value="저장하기" />
-		
+		<input type="submit" value="저장하기(복붙)" />
 	</s:form>
 	
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

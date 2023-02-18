@@ -49,18 +49,26 @@ public class WhitelistMapper {
 		return whitelist;
 	}
 	
-	public void saveWhiteMember(Whitelist whitelist) {
+	public void saveMember(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.insert("insertWhiteMember", whitelist);
+		session.insert("insertMember", whitelist);
 		session.commit();
 		session.close();
 	}
 	
-	public void deleteWhiteMember(Whitelist whitelist) {
+	public void saveByText(String custInfo) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteWhiteMember", whitelist);
+		session.insert("insertByText", custInfo);
+		session.commit();
+		session.close();
+	}
+	
+	public void deleteMember(Whitelist whitelist) {
+		
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		session.delete("deleteMember", whitelist);
 		session.commit();
 		session.close();
 	}

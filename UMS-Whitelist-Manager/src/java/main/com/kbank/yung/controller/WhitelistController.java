@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kbank.yung.dto.AddByTextDto;
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.service.WhitelistService;
 import com.kbank.yung.util.PagingVO;
@@ -54,13 +55,22 @@ public class WhitelistController {
 		
 		ModelAndView mv = new ModelAndView("add-whitelist");
 		mv.addObject("whitelistDto", new WhitelistDto());
+		mv.addObject("addByTextDto", new AddByTextDto());
 		return mv;
 	}
 	
 	@RequestMapping("/saveProcess")
 	public String saveProcess(@ModelAttribute("whitelistDto") WhitelistDto whitelistDto) {
 		
-		service.saveWhiteMember(whitelistDto);
+		service.saveMember(whitelistDto);
+		
+		return "redirect:/list";
+	}
+	
+	@RequestMapping("/saveByText")
+	public String saveByText(@ModelAttribute("addByTextDto") AddByTextDto addByTextDto) {
+		
+		service.saveByText(addByTextDto);
 		
 		return "redirect:/list";
 	}
@@ -69,7 +79,7 @@ public class WhitelistController {
 	public String deleteWhiteMember(@RequestParam("custInfo") String custInfo
 			, @RequestParam(value="searchNumber", required=false)String searchNumber) {
 		
-		service.deleteWhiteMember(custInfo);
+		service.deleteMember(custInfo);
 		if (searchNumber != null) {
 			return "redirect:/list?searchNumber=" + searchNumber;
 		} else {
