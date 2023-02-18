@@ -37,7 +37,7 @@ public class WhitelistService {
 		
 		for (int i = 0; i < whitelistDto.getChannelCodes().length(); i += 2) {
 			Whitelist whitelist = new Whitelist();
-			whitelist.setUMS_VAL(String.valueOf(whitelistDto.getChannelCodes().charAt(i)));
+			whitelist.setCHNL_DV_CD(String.valueOf(whitelistDto.getChannelCodes().charAt(i)));
 			whitelist.setCUST_INFO(whitelistDto.getPhoneNumber());
 			try {
 				mapper.saveWhiteMember(whitelist);

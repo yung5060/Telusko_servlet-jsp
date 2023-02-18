@@ -69,9 +69,9 @@ a {
 		<!-- 옵션선택 끝 -->
 		<table border="1">
 			<tr>
-				<td>UMS_VAL</td>
-				<td>CUST_INFO</td>
-				<td>CREATED_AT</td>
+				<td>채널코드</td>
+				<td>전화번호</td>
+				<td>생성일</td>
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
 				<c:url var="deleteLink" value="/deleteProcess">
@@ -79,11 +79,11 @@ a {
 					<c:param name="searchNumber" value="${paging.searchNumber }"></c:param>
 				</c:url>
 				<tr>
-					<td>${w.UMS_VAL}</td>
+					<td>${w.CHNL_DV_CD}</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
 					<td>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
-					<td>${w.CREATED_AT}</td>
+					<td>${w.PPRT_DTM}</td>
 					<c:if test="${w.CUST_INFO != viewAll[status.index - 1].CUST_INFO}">
 						<td>
 							<a href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>

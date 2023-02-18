@@ -17,6 +17,7 @@ public class WhitelistController {
 	
 	@Autowired
 	WhitelistService service;
+	
 
 	@RequestMapping("/list")
 	public String list(PagingVO vo, Model model
