@@ -18,12 +18,33 @@ h2 {
 
 #outter {
 	display: block;
-	width: 60%;
+	width: 70%;
 	margin: auto;
+	background: #E6E6E6;
+	padding: 20px 40px;
 }
 
 a {
 	text-decoration: none;
+}
+.container {
+	width: 100%;
+	height: 100vh;
+	background: #3c5077;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.btn1 {
+	padding: 5px 10px;
+	background: #2E64FE;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	color: #FFFFFF;
+	border-radius: 30px;
 }
 </style>
 <script type="text/javascript">
@@ -43,12 +64,18 @@ a {
 	<h2 onclick="titleLink()">UMS 화이트리스트 관리자</h2>
 
 	<div id="outter">
-		<button
-			onclick="window.location.href = 'showFormForAddWhiteMember.html' ">추가하기</button>
-		<br>
+		<button class="btn1" onclick="window.location.href = 'showFormForAddWhiteMember.html' ">추가하기</button>
+		<button type="submit" class="btn1">submit</button>
+		<br><br>
 		<form action="<c:url value="list" />">
-			<input type="text" name="searchNumber" placeholder="전화번호를 입력하세요" />
-			<button>검색하기</button>
+			<!-- <input class="form-control" id="ex3" type="text" name="searchNumber" placeholder="전화번호를 입력하세요" />
+			<button class="btn1">검색하기</button>  -->
+			<div class="input-group mb-3">
+				<input type="text" name="searchNumber" class="form-control" placeholder="전화번호를 입력하세요" aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button">검색하기</button>
+				</div>
+			</div>
 		</form>
 		<div style="float: right;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
