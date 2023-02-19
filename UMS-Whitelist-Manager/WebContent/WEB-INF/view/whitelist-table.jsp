@@ -15,9 +15,6 @@ h2 {
 	text-align: center;
 }
 
-table {
-	width: 100%;
-}
 
 #outter {
 	display: block;
@@ -40,11 +37,14 @@ a {
 		window.location.href = 'list';
 	}
 </script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 <body>
 	<h2 onclick="titleLink()">UMS 화이트리스트 관리자</h2>
 
 	<div id="outter">
-		<button onclick="window.location.href = 'showFormForAddWhiteMember.html' " >추가하기</button>
+		<button
+			onclick="window.location.href = 'showFormForAddWhiteMember.html' ">추가하기</button>
 		<br>
 		<form action="<c:url value="list" />">
 			<input type="text" name="searchNumber" placeholder="전화번호를 입력하세요" />
@@ -67,7 +67,7 @@ a {
 			</select>
 		</div>
 		<!-- 옵션선택 끝 -->
-		<table border="1">
+		<table class="table">
 			<tr>
 				<td>채널코드</td>
 				<td>전화번호</td>
@@ -85,8 +85,8 @@ a {
 					</td>
 					<td>${w.PPRT_DTM}</td>
 					<c:if test="${w.CUST_INFO != viewAll[status.index - 1].CUST_INFO}">
-						<td>
-							<a href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
+						<td><a href="${deleteLink}"
+							onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
 						</td>
 					</c:if>
 				</tr>
