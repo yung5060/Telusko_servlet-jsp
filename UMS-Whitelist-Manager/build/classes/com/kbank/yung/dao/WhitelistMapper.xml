@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="countSearch" resultType="int" parameterType="String">
-		SELECT COUNT(DISTINCT CUST_INFO) FROM tb_cust_white_list WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
+		SELECT COUNT(DISTINCT CUST_INFO) FROM tb_cust_white_list WHERE CUST_INFO LIKE '%'||REPLACE(REPLACE(REPLACE(#{searchNumber},'-',''),'_',''),' ','')||'%'
 	</select>
 	
 	<select id="getWhiteMembersAll" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
@@ -54,7 +54,7 @@
 		    GROUP BY CUST_INFO
 		    ) tbl2
 		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
+		    ) A WHERE CUST_INFO LIKE '%'||REPLACE(REPLACE(REPLACE(#{searchNumber},'-',''),'_',''),' ','')||'%'
 		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kbank.yung.dto.AddByTextDto;
 import com.kbank.yung.dto.WhitelistDto;
+import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.service.WhitelistService;
 import com.kbank.yung.util.PagingVO;
 
@@ -45,6 +46,7 @@ public class WhitelistController {
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("addByTextDto", new AddByTextDto());
+		model.addAttribute("whitelist", new Whitelist());
 		model.addAttribute("viewAll", service.getWhiteMembersAllOrSearch(vo));
 		
 		return "whitelist-table";

@@ -59,7 +59,7 @@ tr.colored:hover {
 	font-size: 14px;
 	font-weight: 500;
 	color: #FFFFFF;
-	border-radius: 30px;
+	border-radius: 5px;
 	transition: 0.3s;
 }
 
@@ -80,7 +80,7 @@ tr.colored:hover {
 	font-size: 14px;
 	font-weight: 500;
 	color: #FFFFFF;
-	border-radius: 30px;
+	border-radius: 5px;
 	transition: 0.3s;
 }
 
@@ -115,7 +115,7 @@ tr.colored:hover {
 	padding: 40px;
 	text-align: center;
 	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
+	border-radius: 5px;
 	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 	transform: translateX(-50%) translateY(-50%);
 }
@@ -143,7 +143,7 @@ tr.colored:hover {
 	padding: 40px;
 	text-align: center;
 	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
+	border-radius: 5px;
 	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 	transform: translateX(-50%) translateY(-50%);
 }
@@ -175,13 +175,13 @@ textarea {
 .
 ." />
 				<input class="btn1" style="margin-top: 13px;" type="submit"
-					value="저장하기(복붙)" />
+					value="저장하기" />
 			</s:form>
 		</div>
 	</div>
 
 	<div id="outter">
-		<button class="btn-open-popup">추가하기(복붙)</button>
+		<button class="btn-open-popup">추가하기</button>
 		<form action="<c:url value="list" />">
 			<!-- <input class="form-control" id="ex3" type="text" name="searchNumber" placeholder="전화번호를 입력하세요" />
 			<button class="btn1">검색하기</button>  -->
@@ -218,10 +218,7 @@ textarea {
 				</div>
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
-				<c:url var="deleteLink" value="/deleteProcess">
-					<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
-					<c:param name="searchNumber" value="${paging.searchNumber }"></c:param>
-				</c:url>
+				
 				<tr class="colored" onclick="rowClicked('${w.CUST_INFO}')">
 					<td>${w.CHNL_DV_CD}</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
@@ -234,6 +231,20 @@ textarea {
 					<div class="modal2" id="${w.CUST_INFO }" onclick="rowExit('${w.CUST_INFO}')">
 						<div class="modal2_body">
 							<h4>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }</h4>
+							<s:form modelAttribute="whitelist" action="saveProcess">
+								<input type="hidden" value="${w.CHNL_DV_CD}" id="hiddenTxt" />
+								<s:hidden path="CHNL_DV_CD" />
+								<s:checkbox path="CHNL_DV_CD" value="K" />K
+								<s:checkbox path="CHNL_DV_CD" value="L" />L
+								<s:checkbox path="CHNL_DV_CD" value="M" />M
+								<s:checkbox path="CHNL_DV_CD" value="S" />S<br>
+							</s:form>
+							<c:url var="deleteLink" value="/deleteProcess">
+								<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
+								<c:param name="searchNumber" value="${paging.searchNumber }"></c:param>
+							</c:url>
+							<br>
+							<a class="btn1" href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
 						</div>
 					</div>
 				</tr>
@@ -341,5 +352,24 @@ textarea {
           }
         }
       });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	
+	   $(document).ready(function(){
+		   
+		   var channelCodes = $("#hiddenTxt").val().split(", ");
+		   var $checkboxes = $("input[type=checkbox]");
+		   $checkboxes.each(function(idx, element){
+			      
+			   if(channelCodes.indexOf(element.value) != -1) {
+				   element.setAttribute("checked", "checked");
+			   } else {
+				   element.removeAttribute("checked");
+			   }
+		   });
+		   
+	   });
+	
 </script>
 </html>
