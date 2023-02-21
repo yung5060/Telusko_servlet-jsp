@@ -54,7 +54,11 @@ public class WhitelistService {
 		String text = addByTextDto.getPhoneNumbers().trim();
 		String[] phoneNumbers = text.split("\r?\n|\r");
 		for (String custInfo : phoneNumbers) {
-			mapper.saveByText(custInfo);
+			try {
+				mapper.saveByText(custInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

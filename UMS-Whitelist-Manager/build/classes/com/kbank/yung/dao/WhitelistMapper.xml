@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="countSearch" resultType="int" parameterType="String">
-		SELECT COUNT(*) FROM tb_cust_white_list WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
+		SELECT COUNT(DISTINCT CUST_INFO) FROM tb_cust_white_list WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
 	</select>
 	
 	<select id="getWhiteMembersAll" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">

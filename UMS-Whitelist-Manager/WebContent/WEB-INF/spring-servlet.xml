@@ -11,7 +11,7 @@
         
     <annotation-driven />
     
-    <resources location="/img/**" mapping="/img/" />
+    <resources location="/img/" mapping="/img/**" />
         
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

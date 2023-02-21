@@ -44,6 +44,7 @@ public class WhitelistController {
 		}
 		
 		model.addAttribute("paging", vo);
+		model.addAttribute("addByTextDto", new AddByTextDto());
 		model.addAttribute("viewAll", service.getWhiteMembersAllOrSearch(vo));
 		
 		return "whitelist-table";
