@@ -27,14 +27,6 @@ h2 {
 a {
 	text-decoration: none;
 }
-.container {
-	width: 100%;
-	height: 100vh;
-	background: #3c5077;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
 .btn1 {
 	padding: 5px 10px;
 	background: #2E64FE;
@@ -47,17 +39,7 @@ a {
 	border-radius: 30px;
 }
 </style>
-<script type="text/javascript">
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href = "list?nowPage=${paging.nowPage}&cntPerPage=" + sel;
-	}
-</script>
-<script type="text/javascript">
-	function titleLink() {
-		window.location.href = 'list';
-	}
-</script>
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 <body>
@@ -94,7 +76,7 @@ a {
 			</select>
 		</div>
 		<!-- 옵션선택 끝 -->
-		<table class="table">
+		<table class="table" >
 			<tr>
 				<td>채널코드</td>
 				<td>전화번호</td>
@@ -168,4 +150,15 @@ a {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href = "list?nowPage=${paging.nowPage}&cntPerPage=" + sel;
+	}
+</script>
+<script type="text/javascript">
+	function titleLink() {
+		window.location.href = 'list';
+	}
+</script>
 </html>

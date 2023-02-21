@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="countAll" resultType="int">
-		SELECT COUNT(*) FROM tb_cust_white_list
+		SELECT COUNT(DISTINCT CUST_INFO) FROM tb_cust_white_list
 	</select>
 	
 	<select id="countSearch" resultType="int" parameterType="String">
@@ -24,17 +24,37 @@
 	
 	<select id="getWhiteMembersAll" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
 		SELECT B.CHNL_DV_CD, B.CUST_INFO, B.PPRT_DTM FROM (
-			SELECT ROWNUM RN, A.* FROM (
-				SELECT * FROM TB_CUST_WHITE_LIST ORDER BY CUST_INFO ASC, CHNL_DV_CD ASC
-			) A
+		    SELECT ROWNUM RN, A.* FROM (
+		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
+		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ', ') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
+		    FROM TB_CUST_WHITE_LIST
+		    GROUP BY CUST_INFO
+		    ) tbl1
+		    INNER JOIN (
+		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
+		    FROM TB_CUST_WHITE_LIST
+		    GROUP BY CUST_INFO
+		    ) tbl2
+		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
+		    ) A
 		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="getWhiteMembersSearch" resultType="whitelist" resultMap="result" parameterType="com.kbank.yung.util.PagingVO">
 		SELECT B.CHNL_DV_CD, B.CUST_INFO, B.PPRT_DTM FROM (
-			SELECT ROWNUM RN, A.* FROM (
-				SELECT * FROM TB_CUST_WHITE_LIST WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%' ORDER BY CUST_INFO ASC, CHNL_DV_CD ASC
-			) A
+		    SELECT ROWNUM RN, A.* FROM (
+		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
+		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ', ') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
+		    FROM TB_CUST_WHITE_LIST
+		    GROUP BY CUST_INFO
+		    ) tbl1
+		    INNER JOIN (
+		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
+		    FROM TB_CUST_WHITE_LIST
+		    GROUP BY CUST_INFO
+		    ) tbl2
+		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
+		    ) A WHERE CUST_INFO LIKE '%'||#{searchNumber}||'%'
 		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
