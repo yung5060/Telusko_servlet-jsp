@@ -39,6 +39,8 @@ public class EmployeeController {
 
     @RequestMapping("/saveProcess")
     public String saveProcess(@ModelAttribute("employee") Employee employee) {
+    	
+    	System.out.println(employee);
         
         if(employee.getId() == null) {
             //save-operation

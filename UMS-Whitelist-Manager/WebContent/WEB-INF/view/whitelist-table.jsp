@@ -214,7 +214,7 @@ textarea {
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
 				
-				<tr class="colored" onclick="rowClicked('${w.CUST_INFO}')">
+				<tr class="colored" onclick="rowClicked('${w.CUST_INFO}', '${w.CHNL_DV_CD}')">
 					<td>${w.CHNL_DV_CD}</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
 					<td>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }
@@ -225,15 +225,16 @@ textarea {
 					</td> -->
 					<div class="modal" id="${w.CUST_INFO }" onclick="rowExit('${w.CUST_INFO}')">
 						<div class="modal_body" style="height: 200px;" >
+							<div style="margin-top: -10px;">
 							<h4>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }</h4>
 							<s:form modelAttribute="whitelist" action="modifyProcess">
 								<input type="hidden" value="${w.CHNL_DV_CD}" id="hiddenTxt" />
-								<s:hidden path="CHNL_DV_CD" />
+								<s:hidden path="CUST_INFO" value="${w.CUST_INFO}" />
 								<s:checkbox path="CHNL_DV_CD" value="K" />K
 								<s:checkbox path="CHNL_DV_CD" value="L" />L
 								<s:checkbox path="CHNL_DV_CD" value="M" />M
 								<s:checkbox path="CHNL_DV_CD" value="S" />S<br>
-								<input class="btn1" type="submit" value="저장하기" />
+								<input style="margin-top: 5px;" class="btn1" type="submit" value="저장하기" />
 							</s:form>
 							<c:url var="deleteLink" value="/deleteProcess">
 								<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
@@ -241,7 +242,8 @@ textarea {
 							</c:url>
 							<br>
 							<!-- <button class="btn1">저장하기</button> -->
-							<button class="del-btn1" onclick="deleteLink('${deleteLink}', '${w.CUST_INFO}')">삭제하기</button>
+							<button style="margin-top: 5px;" class="del-btn1" onclick="deleteLink('${deleteLink}', '${w.CUST_INFO}')">삭제하기</button>
+						</div>
 						</div>
 					</div>
 				</tr>
@@ -296,6 +298,7 @@ textarea {
 		</div>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
@@ -320,7 +323,18 @@ textarea {
       const modal = document.querySelector('.modal');
       const btnOpenPopup = document.querySelector('.btn-open-popup');
       
-      function rowClicked(x) {
+      function rowClicked(x, y) {
+    	var hobbies = y.split(",");
+   	   	console.log(hobbies);
+   	   	var $checkboxes = $("input[type=checkbox]");
+   	   	$checkboxes.each(function(idx, element){
+   		   if(hobbies.indexOf(element.value) != -1) {
+   			   element.setAttribute("checked", "checked");
+   		   } else {
+   			   element.removeAttribute("checked");
+   		   }
+   	   });  
+    	
   		const modal2 = document.getElementById(x);
   		modal2.classList.toggle('show');
 
@@ -358,23 +372,5 @@ textarea {
         }
       });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script>
-	
-	   $(document).ready(function(){
-		   
-		   var channelCodes = $("#hiddenTxt").val().split(", ");
-		   var $checkboxes = $("input[type=checkbox]");
-		   $checkboxes.each(function(idx, element){
-			      
-			   if(channelCodes.indexOf(element.value) != -1) {
-				   element.setAttribute("checked", "checked");
-			   } else {
-				   element.removeAttribute("checked");
-			   }
-		   });
-		   
-	   });
-	
-</script>
+
 </html>

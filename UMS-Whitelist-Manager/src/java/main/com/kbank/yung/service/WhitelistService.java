@@ -78,8 +78,6 @@ public class WhitelistService {
 	public void modifyMember(Whitelist whitelist) {
 		String[] allCodes = {"K", "L", "M", "S"};
 		String[] memberCodes = whitelist.getCHNL_DV_CD().split(",");
-		System.out.println(Arrays.toString(memberCodes));
-		System.out.println(whitelist.getCUST_INFO() + "!!!");
 		for (String code : allCodes) {
 			if (Arrays.asList(memberCodes).contains(code)) {
 				try {
