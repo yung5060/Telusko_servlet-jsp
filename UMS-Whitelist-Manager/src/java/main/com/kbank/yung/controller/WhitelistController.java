@@ -82,11 +82,17 @@ public class WhitelistController {
 	public String deleteWhiteMember(@RequestParam("custInfo") String custInfo
 			, @RequestParam(value="searchNumber", required=false)String searchNumber) {
 		
-		service.deleteMember(custInfo);
+		service.deleteMemberClean(custInfo);
 		if (searchNumber != null) {
 			return "redirect:/list?searchNumber=" + searchNumber;
 		} else {
 			return "redirect:/list";
 		}
+	}
+	
+	@RequestMapping("/modifyProcess")
+	public String modifyWhiteMember(@ModelAttribute("whitelist") Whitelist whitelist) {
+		service.modifyMember(whitelist);
+		return "redirect:/list";
 	}
 }

@@ -26,5 +26,15 @@ public class Whitelist {
 	public void setPPRT_DTM(Date pPRT_DTM) {
 		PPRT_DTM = pPRT_DTM;
 	}
+	public Whitelist(String cHNL_DV_CD, String cUST_INFO) {
+		super();
+		CHNL_DV_CD = cHNL_DV_CD;
+		CUST_INFO = cUST_INFO;
+	}
+	public Whitelist() {
+		super();
+	}
+	
+	
 	
 }

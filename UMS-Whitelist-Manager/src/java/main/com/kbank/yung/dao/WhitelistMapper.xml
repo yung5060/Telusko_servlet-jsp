@@ -76,7 +76,11 @@
 		)
 	</insert>
 	
-	<delete id="deleteMember" parameterType="whitelist">
+	<delete id="deleteMemberClean" parameterType="whitelist">
 		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO}
+	</delete>
+	
+	<delete id="deleteMember" parameterType="whitelist">
+		DELETE FROM tb_cust_white_list WHERE CUST_INFO = #{CUST_INFO} AND CHNL_DV_CD = #{CHNL_DV_CD}
 	</delete>
 </mapper>

@@ -1,5 +1,6 @@
 package com.kbank.yung.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,15 +63,37 @@ public class WhitelistService {
 		}
 	}
 	
-	public void deleteMember(String custInfo) {
+	public void deleteMemberClean(String custInfo) {
 		
 		Whitelist whitelist = new Whitelist();
 		whitelist.setCUST_INFO(custInfo);
 		try {
-			mapper.deleteMember(whitelist);
+			mapper.deleteMemberClean(whitelist);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void modifyMember(Whitelist whitelist) {
+		String[] allCodes = {"K", "L", "M", "S"};
+		String[] memberCodes = whitelist.getCHNL_DV_CD().split(",");
+		System.out.println(Arrays.toString(memberCodes));
+		System.out.println(whitelist.getCUST_INFO() + "!!!");
+		for (String code : allCodes) {
+			if (Arrays.asList(memberCodes).contains(code)) {
+				try {
+					mapper.saveMember(new Whitelist(code, whitelist.getCUST_INFO()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					mapper.deleteMember(new Whitelist(code, whitelist.getCUST_INFO()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

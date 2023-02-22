@@ -65,6 +65,14 @@ public class WhitelistMapper {
 		session.close();
 	}
 	
+	public void deleteMemberClean(Whitelist whitelist) {
+		
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		session.delete("deleteMemberClean", whitelist);
+		session.commit();
+		session.close();
+	}
+	
 	public void deleteMember(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();

@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
 <!DOCTYPE html>
-<html>
+<html style="overflow-y: scroll;">
 <head>
 <meta charset="EUC-KR">
 <title>UMS 화이트리스트 관리자</title>
@@ -64,11 +64,32 @@ tr.colored:hover {
 }
 
 .btn1:hover {
-	background: #5499C7;
+	background: #A9CCE3;
 }
 
 .btn1:focus {
-	background: #5499C7;
+	background: #A9CCE3;
+}
+
+.del-btn1 {
+	padding: 5px 10px;
+	background: #CB4335;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	color: #FFFFFF;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+.del-btn1:hover {
+	background: #F1948A;
+}
+
+.del-btn1:focus {
+	background: #F1948A;
 }
 
 .btn-open-popup {
@@ -85,18 +106,19 @@ tr.colored:hover {
 }
 
 .btn-open-popup:hover {
-	background: #5499C7;
+	background: #A9CCE3;
 }
 
 .btn-open-popup:focus {
-	background: #5499C7;
+	background: #A9CCE3;
 }
 
 .modal {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+	margin: 0px;
+   	width: 100%;
 	height: 100%;
 	display: none;
 	background-color: rgba(0, 0, 0, 0.4);
@@ -120,33 +142,6 @@ tr.colored:hover {
 	transform: translateX(-50%) translateY(-50%);
 }
 
-.modal2 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: none;
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal2.show {
-	display: block;
-}
-
-.modal2_body {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 400px;
-	height: 400px;
-	padding: 40px;
-	text-align: center;
-	background-color: rgb(255, 255, 255);
-	border-radius: 5px;
-	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-	transform: translateX(-50%) translateY(-50%);
-}
 
 textarea {
 	width: 100%;
@@ -228,23 +223,25 @@ textarea {
 					<!-- <td><a href="${deleteLink}"
 						onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
 					</td> -->
-					<div class="modal2" id="${w.CUST_INFO }" onclick="rowExit('${w.CUST_INFO}')">
-						<div class="modal2_body">
+					<div class="modal" id="${w.CUST_INFO }" onclick="rowExit('${w.CUST_INFO}')">
+						<div class="modal_body" style="height: 200px;" >
 							<h4>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }</h4>
-							<s:form modelAttribute="whitelist" action="saveProcess">
+							<s:form modelAttribute="whitelist" action="modifyProcess">
 								<input type="hidden" value="${w.CHNL_DV_CD}" id="hiddenTxt" />
 								<s:hidden path="CHNL_DV_CD" />
 								<s:checkbox path="CHNL_DV_CD" value="K" />K
 								<s:checkbox path="CHNL_DV_CD" value="L" />L
 								<s:checkbox path="CHNL_DV_CD" value="M" />M
 								<s:checkbox path="CHNL_DV_CD" value="S" />S<br>
+								<input class="btn1" type="submit" value="저장하기" />
 							</s:form>
 							<c:url var="deleteLink" value="/deleteProcess">
 								<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
 								<c:param name="searchNumber" value="${paging.searchNumber }"></c:param>
 							</c:url>
 							<br>
-							<a class="btn1" href="${deleteLink}" onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
+							<!-- <button class="btn1">저장하기</button> -->
+							<button class="del-btn1" onclick="deleteLink('${deleteLink}', '${w.CUST_INFO}')">삭제하기</button>
 						</div>
 					</div>
 				</tr>
@@ -308,6 +305,14 @@ textarea {
 <script type="text/javascript">
 	function titleLink() {
 		window.location.href = 'list';
+	}
+	function deleteLink(x, y) {
+		if(!(confirm(y + ' 를 삭제하시겠습니까?'))) {
+			return false;
+		} else {
+			location.href = x;
+		}
+		
 	}
 </script>
 <script type="text/javascript">
