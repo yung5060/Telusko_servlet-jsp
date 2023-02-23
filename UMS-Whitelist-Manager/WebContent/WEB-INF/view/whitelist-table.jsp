@@ -130,7 +130,7 @@ tr.colored:hover {
 
 .modal_body {
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	width: 400px;
 	height: 400px;
