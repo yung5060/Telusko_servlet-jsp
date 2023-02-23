@@ -214,7 +214,7 @@ textarea {
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
 				
-				<tr class="colored" onclick="rowClicked('${w.CUST_INFO}', '${w.CHNL_DV_CD}')">
+				<tr class="colored" onclick="rowClicked('modify_modal${status.index}', '${w.CHNL_DV_CD}')">
 					<td>${w.CHNL_DV_CD}</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
 					<td>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }
@@ -223,7 +223,7 @@ textarea {
 					<!-- <td><a href="${deleteLink}"
 						onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
 					</td> -->
-					<div class="modal" id="${w.CUST_INFO }" onclick="rowExit('${w.CUST_INFO}')">
+					<div class="modal" id="modify_modal${status.index}" onclick="rowExit('modify_modal${status.index}')">
 						<div class="modal_body" style="height: 200px;" >
 							<div style="margin-top: -10px;">
 							<h4>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }</h4>
