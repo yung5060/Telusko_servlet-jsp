@@ -190,7 +190,7 @@ textarea {
 		</form>
 
 		<!-- 옵션선택 끝 -->
-		<table class="table">
+		<table class="table" id="whitelistTable">
 			<tr>
 				<td>SMS</td>
 				<td>LMS</td>
@@ -217,7 +217,7 @@ textarea {
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
 				
-				<tr class="colored" onclick="rowClicked('modify_modal${status.index}', '${w.CHNL_DV_CD}')">
+				<tr class="colored">
 					<td>
 						<c:choose>
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'S')}">&#128504;</c:when>
@@ -243,7 +243,9 @@ textarea {
 						</c:choose>
 					</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
-					<td>${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
+					<td>
+						<input type="hidden" value="${w.CUST_INFO}" id="hiddenTxt" />
+						${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
 					<td>${w.PPRT_DTM}</td>
 					<!-- <td><a href="${deleteLink}"
@@ -254,7 +256,6 @@ textarea {
 							<div style="margin-top: -10px;">
 							<h4>${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }</h4>
 							<s:form modelAttribute="whitelist" action="modifyProcess">
-								<input type="hidden" value="${w.CHNL_DV_CD}" id="hiddenTxt" />
 								<s:hidden path="CUST_INFO" value="${w.CUST_INFO}" />
 								<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
 								<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
@@ -359,8 +360,8 @@ textarea {
    		   } else {
    			   element.removeAttribute("checked");
    		   }
-   	   });  
-    	
+   	   });
+		
   		const modal2 = document.getElementById(x);
   		modal2.classList.toggle('show');
 
@@ -368,6 +369,28 @@ textarea {
           body.style.overflow = 'hidden';
         }
   	 }
+      
+      function rowClicked2() {
+ 	   		var table = document.getElementById('whitelistTable');
+ 	   		var rowList = table.rows;
+ 	   		
+ 	   		for (i=1; i<rowList.length; i++) {
+ 	   			
+ 	   			var row = rowList[i];
+ 	   			var str = "";
+ 	   			
+ 	   			row.onclick = function() {
+ 	   				return function() {
+ 	   					
+ 	   					var phone = this.cells[4].innerHTML;
+ 	   					str = "번호 : " + phone;
+ 	   					
+ 	   					console.log(str);
+ 	   				};
+ 	   			}(row);
+ 	   		}
+ 	   	}
+      window.onload=rowClicked2();
       
       function rowExit(x) {
     	  const modal2 = document.getElementById(x);
