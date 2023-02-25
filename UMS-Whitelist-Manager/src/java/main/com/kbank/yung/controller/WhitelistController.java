@@ -1,5 +1,7 @@
 package com.kbank.yung.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,29 +55,23 @@ public class WhitelistController {
 	}
 	
 	
-	@RequestMapping("/showFormForAddWhiteMember")
-	public ModelAndView showForm() {
-		
-		ModelAndView mv = new ModelAndView("add-whitelist");
-		mv.addObject("whitelistDto", new WhitelistDto());
-		mv.addObject("addByTextDto", new AddByTextDto());
-		return mv;
-	}
-	
 	@RequestMapping("/saveProcess")
-	public String saveProcess(@ModelAttribute("whitelistDto") WhitelistDto whitelistDto) {
+	public String saveProcess(@ModelAttribute("whitelistDto") WhitelistDto whitelistDto, HttpServletRequest request) {
 		
 		service.saveMember(whitelistDto);
 		
-		return "redirect:/list";
+		String referer = request.getHeader("Referer");
+		
+		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/saveByText")
-	public String saveByText(@ModelAttribute("addByTextDto") AddByTextDto addByTextDto) {
+	public String saveByText(@ModelAttribute("addByTextDto") AddByTextDto addByTextDto, HttpServletRequest request) {
 		
 		service.saveByText(addByTextDto);
+		String referer = request.getHeader("Referer");
 		
-		return "redirect:/list";
+		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/deleteProcess")
@@ -91,8 +87,9 @@ public class WhitelistController {
 	}
 	
 	@RequestMapping("/modifyProcess")
-	public String modifyWhiteMember(@ModelAttribute("whitelist") Whitelist whitelist) {
+	public String modifyWhiteMember(@ModelAttribute("whitelist") Whitelist whitelist, HttpServletRequest request) {
 		service.modifyMember(whitelist);
-		return "redirect:/list";
+		String referer = request.getHeader("Referer");
+		return "redirect:" + referer;
 	}
 }
