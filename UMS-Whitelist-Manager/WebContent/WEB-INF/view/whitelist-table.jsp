@@ -118,7 +118,7 @@ tr.colored:hover {
 	top: 0;
 	left: 0;
 	margin: 0px;
-   	width: 100%;
+	width: 100%;
 	height: 100%;
 	display: none;
 	background-color: rgba(0, 0, 0, 0.4);
@@ -141,7 +141,6 @@ tr.colored:hover {
 	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 	transform: translateX(-50%) translateY(-50%);
 }
-
 
 textarea {
 	width: 100%;
@@ -172,6 +171,22 @@ textarea {
 				<input class="btn1" style="margin-top: 13px;" type="submit"
 					value="저장하기" />
 			</s:form>
+		</div>
+	</div>
+
+	<div class="modal" id="modify_modal" onclick="rowExit()">
+		<div class="modal_body" style="height: 200px;">
+			<p class="h4" id="modal_phone_number_masked">
+				<s:form modelAttribute="whitelist" action="modifyProcess">
+					<s:hidden path="CUST_INFO" value="" id="modal_phone_number" />
+					<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="M" />MMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="K" />KKO<br>
+					<input style="margin-top: 10px;" class="btn1" type="submit"
+						value="저장하기" />
+				</s:form>
+			<button style="margin-top: 5px;" class="del-btn1" onclick="deleteLink()">삭제하기</button>
 		</div>
 	</div>
 
@@ -216,67 +231,35 @@ textarea {
 				</div>
 			</tr>
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
-				
+
 				<tr class="colored">
-					<td>
-						<c:choose>
+					<td><c:choose>
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'S')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
-						</c:choose>
-					</td>
-					<td>
-						<c:choose>
+						</c:choose></td>
+					<td><c:choose>
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'L')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
-						</c:choose>
-					</td>
-					<td>
-						<c:choose>
+						</c:choose></td>
+					<td><c:choose>
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'M')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
-						</c:choose>
-					</td>
-					<td>
-						<c:choose>
+						</c:choose></td>
+					<td><c:choose>
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'K')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
-						</c:choose>
-					</td>
+						</c:choose></td>
 					<!-- <td>${w.CUST_INFO}</td> -->
 					<td>
-						<input type="hidden" value="${w.CUST_INFO}" id="hiddenTxt" />
+						<input type="hidden" value="${w.CUST_INFO}" /> 
+						<input type="hidden" value="${w.CHNL_DV_CD}" />
+						<input type="hidden" value="${paging.searchNumber }" />
 						${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
 					<td>${w.PPRT_DTM}</td>
-					<!-- <td><a href="${deleteLink}"
-						onclick="if(!(confirm('Are you sure you want to delete the record?'))) return false;">Delete</a>
-					</td> -->
-					<div class="modal" id="modify_modal${status.index}" onclick="rowExit('modify_modal${status.index}')">
-						<div class="modal_body" style="height: 200px;" >
-							<div style="margin-top: -10px;">
-							<h4>${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }</h4>
-							<s:form modelAttribute="whitelist" action="modifyProcess">
-								<s:hidden path="CUST_INFO" value="${w.CUST_INFO}" />
-								<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
-								<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
-								<s:checkbox path="CHNL_DV_CD" value="M" />MMS&nbsp;&nbsp;
-								<s:checkbox path="CHNL_DV_CD" value="K" />KKO<br>
-								<input style="margin-top: 20px;" class="btn1" type="submit" value="저장하기" />
-							</s:form>
-							<c:url var="deleteLink" value="/deleteProcess">
-								<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
-								<c:param name="searchNumber" value="${paging.searchNumber }"></c:param>
-							</c:url>
-							<br>
-							<!-- <button class="btn1">저장하기</button> -->
-							<button style="margin-top: 5px;" class="del-btn1" onclick="deleteLink('${deleteLink}', '${w.CUST_INFO}')">삭제하기</button>
-						</div>
-						</div>
-					</div>
 				</tr>
 			</c:forEach>
 		</table>
-		<!-- <input type="button" value="글쓰기" style="float: right;" onclick="location.href='/write'"><br> -->
 
 		<div style="display: block; text-align: center;">
 			<c:if test="${empty paging.searchNumber }">
@@ -325,7 +308,8 @@ textarea {
 		</div>
 	</div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
@@ -333,14 +317,17 @@ textarea {
 	}
 </script>
 <script type="text/javascript">
+	var deleteAddress = "";
+	var phone = "";
+	
 	function titleLink() {
 		window.location.href = 'list';
 	}
-	function deleteLink(x, y) {
-		if(!(confirm(y + ' 를 삭제하시겠습니까?'))) {
+	function deleteLink() {
+		if(!(confirm(phone + '를 삭제하시겠습니까?'))) {
 			return false;
 		} else {
-			location.href = x;
+			location.href = deleteAddress;
 		}
 		
 	}
@@ -382,18 +369,37 @@ textarea {
  	   			row.onclick = function() {
  	   				return function() {
  	   					
- 	   					var phone = this.cells[4].innerHTML;
- 	   					str = "번호 : " + phone;
- 	   					
- 	   					console.log(str);
+ 	   					phone = this.cells[4].getElementsByTagName('input')[0].value;
+ 	   					var codes = this.cells[4].getElementsByTagName('input')[1].value;
+ 	   					var searchNumber = this.cells[4].getElementsByTagName('input')[2].value;
+ 	   					deleteAddress = "deleteProcess?custInfo=" + phone + "&searchNumber=" + searchNumber;
+ 	   					var codelist = codes.split(",");
+ 	   					var $checkboxes = $("input[type=checkbox]");
+ 	   	   	   			$checkboxes.each(function(idx, element){
+ 	   	   		   		if(codelist.indexOf(element.value) != -1) {
+ 	   	   			   		element.setAttribute("checked", "checked");
+ 	   	   		   		} else {
+ 	   	   			   		element.removeAttribute("checked");
+ 	   	   		   		}
+ 	   	   	   			});
+ 	   	   	   			
+ 	   	   	   			document.getElementById("modal_phone_number_masked").innerHTML = phone.substr(0,3) + "-****-" + phone.substr(7,11);
+ 	   	   	   			document.getElementById("modal_phone_number").value = phone;
+ 	   	   	   			
+		 	   	   	   	const modal2 = document.getElementById('modify_modal');
+		 	     		modal2.classList.toggle('show');
+		
+		 	           if (modal2.classList.contains('show')) {
+		 	             body.style.overflow = 'hidden';
+		 	           }
  	   				};
  	   			}(row);
  	   		}
  	   	}
       window.onload=rowClicked2();
       
-      function rowExit(x) {
-    	  const modal2 = document.getElementById(x);
+      function rowExit() {
+    	  const modal2 = document.getElementById('modify_modal');
     	  if (event.target === modal2) {
     		  modal2.classList.toggle('show');
 
