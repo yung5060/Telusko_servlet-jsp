@@ -76,6 +76,10 @@ public class WhitelistService {
 	}
 	
 	public void modifyMember(Whitelist whitelist) {
+		if (whitelist.getCHNL_DV_CD() == null) {
+			mapper.deleteMemberClean(whitelist);
+			return;
+		}
 		String[] allCodes = {"K", "L", "M", "S"};
 		String[] memberCodes = whitelist.getCHNL_DV_CD().split(",");
 		for (String code : allCodes) {

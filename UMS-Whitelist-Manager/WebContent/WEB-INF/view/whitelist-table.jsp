@@ -192,7 +192,10 @@ textarea {
 		<!-- 옵션선택 끝 -->
 		<table class="table">
 			<tr>
-				<td>채널코드</td>
+				<td>SMS</td>
+				<td>LMS</td>
+				<td>MMS</td>
+				<td>KKO</td>
 				<td>전화번호</td>
 				<td>생성일</td>
 				<div style="float: right;">
@@ -215,9 +218,32 @@ textarea {
 			<c:forEach items="${viewAll}" var="w" varStatus="status">
 				
 				<tr class="colored" onclick="rowClicked('modify_modal${status.index}', '${w.CHNL_DV_CD}')">
-					<td>${w.CHNL_DV_CD}</td>
+					<td>
+						<c:choose>
+							<c:when test="${fn:contains(w.CHNL_DV_CD, 'S')}">&#128504;</c:when>
+							<c:otherwise>&nbsp;</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${fn:contains(w.CHNL_DV_CD, 'L')}">&#128504;</c:when>
+							<c:otherwise>&nbsp;</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${fn:contains(w.CHNL_DV_CD, 'M')}">&#128504;</c:when>
+							<c:otherwise>&nbsp;</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${fn:contains(w.CHNL_DV_CD, 'K')}">&#128504;</c:when>
+							<c:otherwise>&nbsp;</c:otherwise>
+						</c:choose>
+					</td>
 					<!-- <td>${w.CUST_INFO}</td> -->
-					<td>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }
+					<td>${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
 					<td>${w.PPRT_DTM}</td>
 					<!-- <td><a href="${deleteLink}"
@@ -226,15 +252,15 @@ textarea {
 					<div class="modal" id="modify_modal${status.index}" onclick="rowExit('modify_modal${status.index}')">
 						<div class="modal_body" style="height: 200px;" >
 							<div style="margin-top: -10px;">
-							<h4>${fn:substring(w.CUST_INFO,0,3) }-${fn:substring(w.CUST_INFO,3,7) }-${fn:substring(w.CUST_INFO,7,11) }</h4>
+							<h4>${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }</h4>
 							<s:form modelAttribute="whitelist" action="modifyProcess">
 								<input type="hidden" value="${w.CHNL_DV_CD}" id="hiddenTxt" />
 								<s:hidden path="CUST_INFO" value="${w.CUST_INFO}" />
-								<s:checkbox path="CHNL_DV_CD" value="K" />K
-								<s:checkbox path="CHNL_DV_CD" value="L" />L
-								<s:checkbox path="CHNL_DV_CD" value="M" />M
-								<s:checkbox path="CHNL_DV_CD" value="S" />S<br>
-								<input style="margin-top: 5px;" class="btn1" type="submit" value="저장하기" />
+								<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
+								<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
+								<s:checkbox path="CHNL_DV_CD" value="M" />MMS&nbsp;&nbsp;
+								<s:checkbox path="CHNL_DV_CD" value="K" />KKO<br>
+								<input style="margin-top: 20px;" class="btn1" type="submit" value="저장하기" />
 							</s:form>
 							<c:url var="deleteLink" value="/deleteProcess">
 								<c:param name="custInfo" value="${w.CUST_INFO}"></c:param>
