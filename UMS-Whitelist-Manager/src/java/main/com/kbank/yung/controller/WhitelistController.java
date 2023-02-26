@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kbank.yung.dto.AddByTextDto;
 import com.kbank.yung.dto.WhitelistDto;
-import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.service.WhitelistService;
 import com.kbank.yung.util.PagingVO;
 
