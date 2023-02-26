@@ -176,13 +176,14 @@ textarea {
 
 	<div class="modal" id="modify_modal" onclick="rowExit()">
 		<div class="modal_body" style="height: 200px;">
-			<p class="h4" id="modal_phone_number_masked">
-				<s:form modelAttribute="whitelist" action="modifyProcess">
-					<s:hidden path="CUST_INFO" value="" id="modal_phone_number" />
-					<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
-					<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
-					<s:checkbox path="CHNL_DV_CD" value="M" />MMS&nbsp;&nbsp;
-					<s:checkbox path="CHNL_DV_CD" value="K" />KKO<br>
+			<p class="h4" id="modal_phone_number">
+				<s:form modelAttribute="whitelistDto" action="modifyProcess">
+					<s:hidden path="rowNum" value="" id="modal_index" />
+					<s:hidden path="searchNumber" value="" id="modal_searchNumber" />
+					<s:checkbox path="channelCodes" value="S" />SMS&nbsp;&nbsp;
+					<s:checkbox path="channelCodes" value="L" />LMS&nbsp;&nbsp;
+					<s:checkbox path="channelCodes" value="M" />MMS&nbsp;&nbsp;
+					<s:checkbox path="channelCodes" value="K" />KKO<br>
 					<input style="margin-top: 10px;" class="btn1" type="submit"
 						value="저장하기" />
 				</s:form>
@@ -197,9 +198,9 @@ textarea {
 			<button class="btn1">검색하기</button>  -->
 			<div class="input-group mb-3" style="margin-top: 10px;">
 				<input type="text" name="searchNumber" class="form-control"
-					placeholder="전화번호를 입력하세요" aria-describedby="basic-addon2">
+					placeholder="전화번호를 입력하세요" aria-describedby="basic-addon2" id="searchNum">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button">검색하기</button>
+					<button class="btn btn-outline-secondary" type="button" onclick="changeSearchNum()">검색하기</button>
 				</div>
 			</div>
 		</form>
@@ -249,11 +250,9 @@ textarea {
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'K')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
 						</c:choose></td>
-					<!-- <td>${w.CUST_INFO}</td> -->
 					<td>
-						<input type="hidden" value="${w.CUST_INFO}" /> 
+						<input type="hidden" value="${paging.cntPerPage * (paging.nowPage - 1) + status.index + 1}" /> 
 						<input type="hidden" value="${w.CHNL_DV_CD}" />
-						<input type="hidden" value="${paging.searchNumber }" />
 						${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
 					<td>${w.PPRT_DTM}</td>
@@ -318,13 +317,15 @@ textarea {
 </script>
 <script type="text/javascript">
 	var deleteAddress = "";
-	var phone = "";
+	var index = "";
 	
 	function titleLink() {
 		window.location.href = 'list';
 	}
+	
+	
 	function deleteLink() {
-		if(!(confirm(phone + '를 삭제하시겠습니까?'))) {
+		if(!(confirm('해당 기록을 삭제하시겠습니까?'))) {
 			return false;
 		} else {
 			location.href = deleteAddress;
@@ -364,15 +365,22 @@ textarea {
  	   		for (i=1; i<rowList.length; i++) {
  	   			
  	   			var row = rowList[i];
- 	   			var str = "";
  	   			
  	   			row.onclick = function() {
  	   				return function() {
  	   					
- 	   					phone = this.cells[4].getElementsByTagName('input')[0].value;
+ 	   					index = this.cells[4].getElementsByTagName('input')[0].value;
+ 	   					console.log(index);
+ 	   					var phone = this.cells[4].innerText;
  	   					var codes = this.cells[4].getElementsByTagName('input')[1].value;
- 	   					var searchNumber = this.cells[4].getElementsByTagName('input')[2].value;
- 	   					deleteAddress = "deleteProcess?custInfo=" + phone + "&searchNumber=" + searchNumber;
+ 	   					var searchNumber = "";
+ 	   					var urlParams = new URLSearchParams(window.location.search);
+ 	   					deleteAddress = "deleteProcess?custInfo=" + index;
+ 	   					if (urlParams.has('searchNumber')) {
+ 	   						searchNumber = urlParams.get('searchNumber');
+ 	   						deleteAddress = "deleteProcess?custInfo=" + index + "&searchNumber=" + searchNumber;
+ 	   					}
+ 	   					console.log(deleteAddress);
  	   					var codelist = codes.split(",");
  	   					var $checkboxes = $("input[type=checkbox]");
  	   	   	   			$checkboxes.each(function(idx, element){
@@ -383,8 +391,9 @@ textarea {
  	   	   		   		}
  	   	   	   			});
  	   	   	   			
- 	   	   	   			document.getElementById("modal_phone_number_masked").innerHTML = phone.substr(0,3) + "-****-" + phone.substr(7,11);
- 	   	   	   			document.getElementById("modal_phone_number").value = phone;
+ 	   	   	   			document.getElementById("modal_index").value = index;
+ 	   	   	   			document.getElementById("modal_phone_number").innerHTML = phone;
+ 	   	   	   			document.getElementById("modal_searchNumber").value = searchNumber;
  	   	   	   			
 		 	   	   	   	const modal2 = document.getElementById('modify_modal');
 		 	     		modal2.classList.toggle('show');

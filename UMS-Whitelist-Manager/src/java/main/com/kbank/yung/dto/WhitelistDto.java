@@ -2,9 +2,22 @@ package com.kbank.yung.dto;
 
 public class WhitelistDto {
 	
-	private String phoneNumber;
+	private String rowNum;
 	private String channelCodes;
+	private String searchNumber;
 	
+	
+	
+	public String getSearchNumber() {
+		return searchNumber;
+	}
+
+
+	public void setSearchNumber(String searchNumber) {
+		this.searchNumber = searchNumber;
+	}
+
+
 	public WhitelistDto(String channelCodes) {
 		super();
 		this.channelCodes = channelCodes;
@@ -15,13 +28,18 @@ public class WhitelistDto {
 		super();
 	}
 
+	
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getRowNum() {
+		return rowNum;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+
+
+	public void setRowNum(String rowNum) {
+		this.rowNum = rowNum;
 	}
+
+
 	public String getChannelCodes() {
 		return channelCodes;
 	}

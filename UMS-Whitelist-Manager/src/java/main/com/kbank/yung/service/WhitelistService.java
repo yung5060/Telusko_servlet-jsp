@@ -35,21 +35,6 @@ public class WhitelistService {
 	}
 	
 	
-	public void saveMember(WhitelistDto whitelistDto) {
-		
-		for (int i = 0; i < whitelistDto.getChannelCodes().length(); i += 2) {
-			Whitelist whitelist = new Whitelist();
-			whitelist.setCHNL_DV_CD(String.valueOf(whitelistDto.getChannelCodes().charAt(i)));
-			whitelist.setCUST_INFO(whitelistDto.getPhoneNumber());
-			try {
-				mapper.saveMember(whitelist);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println(e.toString());
-			}
-		}
-	}
-	
 	public void saveByText(AddByTextDto addByTextDto) {
 		
 		String text = addByTextDto.getPhoneNumbers().trim();
@@ -63,35 +48,51 @@ public class WhitelistService {
 		}
 	}
 	
-	public void deleteMemberClean(String custInfo) {
+	public void deleteMemberClean(String rowNum, String searchNumber) {
 		
-		Whitelist whitelist = new Whitelist();
-		whitelist.setCUST_INFO(custInfo);
-		try {
-			mapper.deleteMemberClean(whitelist);
-		} catch (Exception e) {
-			e.printStackTrace();
+		WhitelistDto whitelistDto = new WhitelistDto();
+		whitelistDto.setRowNum(rowNum);
+		whitelistDto.setSearchNumber(searchNumber);
+		if (searchNumber == null) {
+			try {
+				mapper.deleteMemberClean(whitelistDto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				mapper.deleteMemberCleanSearch(whitelistDto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
 	}
 	
-	public void modifyMember(Whitelist whitelist) {
-		if (whitelist.getCHNL_DV_CD() == null) {
-			mapper.deleteMemberClean(whitelist);
+	public void modifyMember(WhitelistDto whitelistDto) {
+		if (whitelistDto.getChannelCodes() == null) {
+			if (whitelistDto.getSearchNumber() == "") {
+				mapper.deleteMemberClean(whitelistDto);
+			} else {
+				mapper.deleteMemberCleanSearch(whitelistDto);
+			}
 			return;
 		}
 		String[] allCodes = {"K", "L", "M", "S"};
-		String[] memberCodes = whitelist.getCHNL_DV_CD().split(",");
+		String[] memberCodes = whitelistDto.getChannelCodes().split(",");
 		for (String code : allCodes) {
+			WhitelistDto tmp = new WhitelistDto();
+			tmp.setChannelCodes(code);
+			tmp.setRowNum(whitelistDto.getRowNum());
+			tmp.setSearchNumber(whitelistDto.getSearchNumber());
 			if (Arrays.asList(memberCodes).contains(code)) {
 				try {
-					mapper.saveMember(new Whitelist(code, whitelist.getCUST_INFO()));
+					mapper.saveMember(tmp);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
 				try {
-					mapper.deleteMember(new Whitelist(code, whitelist.getCUST_INFO()));
+					mapper.deleteMember(tmp);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
