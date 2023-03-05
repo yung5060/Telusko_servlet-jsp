@@ -59,48 +59,6 @@
 		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
-	<insert id="insertMember" parameterType="com.kbank.yung.dto.WhitelistDto">
-		INSERT INTO TB_CUST_WHITE_LIST (CUST_INFO, CHNL_DV_CD)
-VALUES (
-    (SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A 
-		) B WHERE RN = #{rowNum})
-        , #{channelCodes})
-	</insert>
-	
-	<insert id="insertMemberSearch" parameterType="com.kbank.yung.dto.WhitelistDto">
-		INSERT INTO TB_CUST_WHITE_LIST (CUST_INFO, CHNL_DV_CD)
-VALUES (
-    (SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A WHERE CUST_INFO LIKE '%'||REPLACE(REPLACE(REPLACE(#{searchNumber},'-',''),'_',''),' ','')||'%'
-		) B WHERE RN = #{rowNum})
-        , #{channelCodes})
-	</insert>
-	
 	<insert id="insertByText" parameterType="java.lang.String">
 		INSERT INTO TB_CUST_WHITE_LIST(CUST_INFO, CHNL_DV_CD, PPRT_DTM) (
     		SELECT REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','') CUST_INFO,
@@ -115,87 +73,17 @@ VALUES (
 		)
 	</insert>
 	
-	<delete id="deleteMemberClean" parameterType="com.kbank.yung.dto.WhitelistDto">
-		DELETE FROM TB_CUST_WHITE_LIST WHERE 
-	CUST_INFO = (
-    SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A 
-		) B WHERE RN = #{rowNum}
-		)
+	<insert id="insertMember" parameterType="com.kbank.yung.entity.Whitelist">
+		INSERT INTO TB_CUST_WHITE_LIST (CUST_INFO, CHNL_DV_CD)
+		VALUES (#{CUST_INFO}, #{CHNL_DV_CD})
+	</insert>
+	
+	<delete id="deleteMember" parameterType="com.kbank.yung.entity.Whitelist">
+		DELETE FROM TB_CUST_WHITE_LIST WHERE CUST_INFO = #{CUST_INFO} AND CHNL_DV_CD = #{CHNL_DV_CD}
 	</delete>
 	
-	<delete id="deleteMemberCleanSearch" parameterType="com.kbank.yung.dto.WhitelistDto">
-		DELETE FROM TB_CUST_WHITE_LIST WHERE 
-	CUST_INFO = (
-    SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A WHERE CUST_INFO LIKE '%'||REPLACE(REPLACE(REPLACE(#{searchNumber},'-',''),'_',''),' ','')||'%'
-		) B WHERE RN = #{rowNum}
-)
+	<delete id="deleteMemberClean" parameterType="com.kbank.yung.entity.Whitelist">
+		DELETE FROM TB_CUST_WHITE_LIST WHERE CUST_INFO = #{CUST_INFO}
 	</delete>
-	
-	<delete id="deleteMember" parameterType="com.kbank.yung.dto.WhitelistDto">
-		DELETE FROM TB_CUST_WHITE_LIST WHERE CHNL_DV_CD = #{channelCodes} AND
-	CUST_INFO = (
-    SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A 
-		) B WHERE RN = #{rowNum}
-	)
-	</delete>
-	
-	<delete id="deleteMemberSearch" parameterType="com.kbank.yung.dto.WhitelistDto">
-		DELETE FROM TB_CUST_WHITE_LIST WHERE CHNL_DV_CD = #{channelCodes} AND
-	CUST_INFO = (
-    SELECT B.CUST_INFO FROM (
-		    SELECT ROWNUM RN, A.* FROM (
-		    SELECT tbl1.CUST_INFO, tbl1.CHNL_DV_CD, tbl2.PPRT_DTM FROM (
-		    SELECT CUST_INFO, LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(ORDER BY CUST_INFO ASC) AS CHNL_DV_CD
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl1
-		    INNER JOIN (
-		    SELECT CUST_INFO, MAX(PPRT_DTM) AS PPRT_DTM
-		    FROM TB_CUST_WHITE_LIST
-		    GROUP BY CUST_INFO
-		    ) tbl2
-		    ON (tbl1.CUST_INFO = tbl2.CUST_INFO)
-		    ) A WHERE CUST_INFO LIKE '%'||REPLACE(REPLACE(REPLACE(#{searchNumber},'-',''),'_',''),' ','')||'%'
-		) B WHERE RN = #{rowNum}
-	)
-	</delete>
+
 </mapper>

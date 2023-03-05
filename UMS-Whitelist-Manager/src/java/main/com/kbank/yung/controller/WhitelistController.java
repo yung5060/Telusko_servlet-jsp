@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kbank.yung.dto.AddByTextDto;
 import com.kbank.yung.dto.WhitelistDto;
+import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.service.WhitelistService;
 import com.kbank.yung.util.PagingVO;
 
@@ -20,12 +21,13 @@ public class WhitelistController {
 	@Autowired
 	WhitelistService service;
 	
+	
 
 	@RequestMapping("/list")
 	public String list(PagingVO vo, Model model
 			, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
-			, @RequestParam(value="searchNumber", required=false)String searchNumber) {
+			, @RequestParam(value="searchNumber", required=false)String searchNumber) throws Exception {
 		
 		int total = 0;
 		if (nowPage == null && cntPerPage == null) {
@@ -46,8 +48,9 @@ public class WhitelistController {
 		
 		model.addAttribute("paging", vo);
 		model.addAttribute("addByTextDto", new AddByTextDto());
-		model.addAttribute("whitelistDto", new WhitelistDto());
+		model.addAttribute("whitelist", new Whitelist());
 		model.addAttribute("viewAll", service.getWhiteMembersAllOrSearch(vo));
+		
 		
 		return "whitelist-table";
 	}
@@ -66,17 +69,17 @@ public class WhitelistController {
 	@RequestMapping("/deleteProcess")
 	public String deleteWhiteMember(@RequestParam("custInfo") String custInfo
 			, @RequestParam(value="searchNumber", required=false)String searchNumber
-			, HttpServletRequest request) {
+			, HttpServletRequest request) throws Exception {
 		
-		service.deleteMemberClean(custInfo, searchNumber);
+		service.deleteMemberClean(custInfo);
 		String referer = request.getHeader("Referer");
 		
 		return "redirect:" + referer;
 	}
 	
 	@RequestMapping("/modifyProcess")
-	public String modifyWhiteMember(@ModelAttribute("whitelistDto") WhitelistDto whitelistDto, HttpServletRequest request) {
-		service.modifyMember(whitelistDto);
+	public String modifyWhiteMember(@ModelAttribute("whitelist") Whitelist whitelist, HttpServletRequest request) throws Exception {
+		service.modifyMember(whitelist);
 		String referer = request.getHeader("Referer");
 		return "redirect:" + referer;
 	}

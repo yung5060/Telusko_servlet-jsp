@@ -33,7 +33,7 @@ table, tr, td {
 	border: none;
 	border-collapse: collapse;
 	text-align: center;
-	transition: 0.2s;
+	cursor: pointer;
 }
 
 tr.colored:nth-child(even) {
@@ -48,6 +48,7 @@ tr.colored:nth-child(odd) {
 
 tr.colored:hover {
 	background: #F2F3F4;
+	font-weight: bold;
 }
 
 .btn1 {
@@ -154,7 +155,7 @@ textarea {
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 <body>
-	<h2 style="margin-top: 30px;" onclick="titleLink()">UMS 화이트리스트 관리자</h2>
+	<h2 style="margin-top: 30px; cursor: pointer;" onclick="titleLink()">UMS 화이트리스트 관리자</h2>
 
 	<div class="modal">
 		<div class="modal_body">
@@ -177,13 +178,12 @@ textarea {
 	<div class="modal" id="modify_modal" onclick="rowExit()">
 		<div class="modal_body" style="height: 200px;">
 			<p class="h4" id="modal_phone_number">
-				<s:form modelAttribute="whitelistDto" action="modifyProcess">
-					<s:hidden path="rowNum" value="" id="modal_index" />
-					<s:hidden path="searchNumber" value="" id="modal_searchNumber" />
-					<s:checkbox path="channelCodes" value="S" />SMS&nbsp;&nbsp;
-					<s:checkbox path="channelCodes" value="L" />LMS&nbsp;&nbsp;
-					<s:checkbox path="channelCodes" value="M" />MMS&nbsp;&nbsp;
-					<s:checkbox path="channelCodes" value="K" />KKO<br>
+				<s:form modelAttribute="whitelist" action="modifyProcess">
+					<s:hidden path="CUST_INFO" value="" id="modal_cust_info" />
+					<s:checkbox path="CHNL_DV_CD" value="S" />SMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="L" />LMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="M" />MMS&nbsp;&nbsp;
+					<s:checkbox path="CHNL_DV_CD" value="K" />KKO<br>
 					<input style="margin-top: 10px;" class="btn1" type="submit"
 						value="저장하기" />
 				</s:form>
@@ -250,12 +250,12 @@ textarea {
 							<c:when test="${fn:contains(w.CHNL_DV_CD, 'K')}">&#128504;</c:when>
 							<c:otherwise>&nbsp;</c:otherwise>
 						</c:choose></td>
-					<td>
-						<input type="hidden" value="${paging.cntPerPage * (paging.nowPage - 1) + status.index + 1}" /> 
+					<td style="width: 300px;">
+						<input type="hidden" value="${w.encrypted_CUST_INFO}" /> 
 						<input type="hidden" value="${w.CHNL_DV_CD}" />
 						${fn:substring(w.CUST_INFO,0,3) }-****-${fn:substring(w.CUST_INFO,7,11) }
 					</td>
-					<td>${w.PPRT_DTM}</td>
+					<td style="width: 300px;">${w.PPRT_DTM}</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -317,7 +317,6 @@ textarea {
 </script>
 <script type="text/javascript">
 	var deleteAddress = "";
-	var index = "";
 	
 	function titleLink() {
 		window.location.href = 'list';
@@ -369,17 +368,12 @@ textarea {
  	   			row.onclick = function() {
  	   				return function() {
  	   					
- 	   					index = this.cells[4].getElementsByTagName('input')[0].value;
- 	   					console.log(index);
+ 	   					var encrypted_custInfo = this.cells[4].getElementsByTagName('input')[0].value;
  	   					var phone = this.cells[4].innerText;
  	   					var codes = this.cells[4].getElementsByTagName('input')[1].value;
  	   					var searchNumber = "";
  	   					var urlParams = new URLSearchParams(window.location.search);
- 	   					deleteAddress = "deleteProcess?custInfo=" + index;
- 	   					if (urlParams.has('searchNumber')) {
- 	   						searchNumber = urlParams.get('searchNumber');
- 	   						deleteAddress = "deleteProcess?custInfo=" + index + "&searchNumber=" + searchNumber;
- 	   					}
+ 	   					deleteAddress = "deleteProcess?custInfo=" + encrypted_custInfo;
  	   					console.log(deleteAddress);
  	   					var codelist = codes.split(",");
  	   					var $checkboxes = $("input[type=checkbox]");
@@ -391,9 +385,8 @@ textarea {
  	   	   		   		}
  	   	   	   			});
  	   	   	   			
- 	   	   	   			document.getElementById("modal_index").value = index;
+ 	   	   	   			document.getElementById("modal_cust_info").value = encrypted_custInfo;
  	   	   	   			document.getElementById("modal_phone_number").innerHTML = phone;
- 	   	   	   			document.getElementById("modal_searchNumber").value = searchNumber;
  	   	   	   			
 		 	   	   	   	const modal2 = document.getElementById('modify_modal');
 		 	     		modal2.classList.toggle('show');

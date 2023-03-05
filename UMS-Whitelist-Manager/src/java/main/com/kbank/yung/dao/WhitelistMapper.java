@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.util.MyBatisUtil;
 import com.kbank.yung.util.PagingVO;
@@ -50,14 +49,10 @@ public class WhitelistMapper {
 		return whitelist;
 	}
 	
-	public void saveMember(WhitelistDto whitelistDto) {
+	public void saveMember(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		if (whitelistDto.getSearchNumber() == "") {
-			session.insert("insertMember", whitelistDto);
-		} else {
-			session.insert("insertMemberSearch", whitelistDto);
-		}
+		session.insert("insertMember", whitelist);
 		session.commit();
 		session.close();
 	}
@@ -70,29 +65,19 @@ public class WhitelistMapper {
 		session.close();
 	}
 	
-	public void deleteMemberClean(WhitelistDto whitelistDto) {
+	public void deleteMemberClean(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteMemberClean", whitelistDto);
+		session.delete("deleteMemberClean", whitelist);
 		session.commit();
 		session.close();
 	}
 	
-	public void deleteMemberCleanSearch(WhitelistDto whitelistDto) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("deleteMemberCleanSearch", whitelistDto);
-		session.commit();
-		session.close();
-	}
 	
-	public void deleteMember(WhitelistDto whitelistDto) {
+	public void deleteMember(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		if (whitelistDto.getSearchNumber() == "") {
-			session.delete("deleteMember", whitelistDto);
-		} else {
-			session.delete("deleteMemberSearch", whitelistDto);
-		}
+		session.delete("deleteMember", whitelist);
 		session.commit();
 		session.close();
 	}
