@@ -20,11 +20,12 @@ public class Aes256Crypt {
 		SecretKeySpec newKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, newKey, ivSpec);
-		return Base64.getEncoder().encodeToString(cipher.doFinal(textBytes));
+//		return Base64.getEncoder().encodeToString(cipher.doFinal(textBytes));
+		return Base64.getUrlEncoder().encodeToString(cipher.doFinal(textBytes));
 	}
 	
 	public String aes256Decode(String str, String key) throws Exception {
-		byte[] textBytes = Base64.getDecoder().decode(str);
+		byte[] textBytes = Base64.getUrlDecoder().decode(str);
 		AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
 		SecretKeySpec newKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");

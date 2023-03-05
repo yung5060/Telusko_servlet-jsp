@@ -70,7 +70,6 @@ public class WhitelistService {
 	}
 
 	public void deleteMemberClean(String custInfo) throws Exception {
-		System.out.println(custInfo);
 		Whitelist whitelist = new Whitelist();
 		whitelist.setCUST_INFO(aes256Crypt.aes256Decode(custInfo, key));
 		try {
