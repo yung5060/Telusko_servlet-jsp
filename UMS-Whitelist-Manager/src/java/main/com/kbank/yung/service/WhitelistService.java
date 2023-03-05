@@ -52,8 +52,8 @@ public class WhitelistService {
 		return result;
 	}
 
-	public void saveByText(AddByTextDto addByTextDto) {
-
+	public String saveByText(AddByTextDto addByTextDto) {
+		String result = "";
 		String text = addByTextDto.getPhoneNumbers().trim();
 		String[] phoneNumbers = text.split("\r?\n|\r");
 		for (String custInfo : phoneNumbers) {
@@ -61,12 +61,25 @@ public class WhitelistService {
 			if (custInfo == "") {
 				continue;
 			}
+			String tmp = mapper.getNewChannelCodes(custInfo);
+			
 			try {
 				mapper.saveByText(custInfo);
+				if (tmp == null) {
+					result += (custInfo.replace("-", "").replace("_", "").replace(" ", "") + " : " + "변경 없음\n");
+				} else {
+					result += (custInfo.replace("-", "").replace("_", "").replace(" ", "") + " : " + tmp + " 추가 (성공)\n");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				if (tmp == null) {
+					result += (custInfo.replace("-", "").replace("_", "").replace(" ", "") + " : " + "변경 없음 (실패)\n");
+				} else {
+					result += (custInfo.replace("-", "").replace("_", "").replace(" ", "") + " : " + tmp + " 추가 (실패)\n");
+				}
 			}
 		}
+		return result.trim();
 	}
 
 	public void deleteMemberClean(String custInfo) throws Exception {

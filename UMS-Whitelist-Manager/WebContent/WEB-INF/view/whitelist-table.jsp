@@ -337,27 +337,7 @@ textarea {
       const modal = document.querySelector('.modal');
       const btnOpenPopup = document.querySelector('.btn-open-popup');
       
-      function rowClicked(x, y) {
-    	var hobbies = y.split(",");
-   	   	console.log(hobbies);
-   	   	var $checkboxes = $("input[type=checkbox]");
-   	   	$checkboxes.each(function(idx, element){
-   		   if(hobbies.indexOf(element.value) != -1) {
-   			   element.setAttribute("checked", "checked");
-   		   } else {
-   			   element.removeAttribute("checked");
-   		   }
-   	   });
-		
-  		const modal2 = document.getElementById(x);
-  		modal2.classList.toggle('show');
-
-        if (modal2.classList.contains('show')) {
-          body.style.overflow = 'hidden';
-        }
-  	 }
-      
-      function rowClicked2() {
+      function rowClicked() {
  	   		var table = document.getElementById('whitelistTable');
  	   		var rowList = table.rows;
  	   		
@@ -374,7 +354,6 @@ textarea {
  	   					var searchNumber = "";
  	   					var urlParams = new URLSearchParams(window.location.search);
  	   					deleteAddress = "deleteProcess?custInfo=" + encrypted_custInfo;
- 	   					console.log(deleteAddress);
  	   					var codelist = codes.split(",");
  	   					var $checkboxes = $("input[type=checkbox]");
  	   	   	   			$checkboxes.each(function(idx, element){
@@ -398,7 +377,7 @@ textarea {
  	   			}(row);
  	   		}
  	   	}
-      window.onload=rowClicked2();
+      window.onload=rowClicked();
       
       function rowExit() {
     	  const modal2 = document.getElementById('modify_modal');
@@ -418,6 +397,21 @@ textarea {
           body.style.overflow = 'hidden';
         }
       });
+      
+      window.onkeyup = function(e) {
+    	  const modal2 = document.getElementById('modify_modal');
+    		var key = e.keyCode ? e.keyCode : e.which;
+    		if (key === 27) {
+
+    	          if (modal.classList.contains('show')) {
+    	            modal.classList.toggle('show');
+    	          }
+    	          
+    	          if (modal2.classList.contains('show')) {
+    	            modal2.classList.toggle('show');
+    	          }
+    	        }
+    	}
 
       modal.addEventListener('click', (event) => {
         if (event.target === modal) {

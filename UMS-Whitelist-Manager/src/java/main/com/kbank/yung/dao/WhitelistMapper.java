@@ -49,6 +49,15 @@ public class WhitelistMapper {
 		return whitelist;
 	}
 	
+	public String getNewChannelCodes(String custInfo) {
+		
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		String result = (String) session.selectOne("getNewChannelCodes", custInfo);
+		session.commit();
+		session.close();
+		return result;
+	}
+	
 	public void saveMember(Whitelist whitelist) {
 		
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();

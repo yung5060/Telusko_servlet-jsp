@@ -59,6 +59,29 @@
 		) B WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
+	<select id="getNewChannelCodes" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT LISTAGG(CHNL_DV_CD, ',') WITHIN GROUP(
+    ORDER BY CUST_INFO ASC
+    , CASE
+        WHEN CHNL_DV_CD = 'S' THEN 1
+        WHEN CHNL_DV_CD = 'L' THEN 2
+        WHEN CHNL_DV_CD = 'M' THEN 3
+        WHEN CHNL_DV_CD = 'K' THEN 4
+        ELSE 99
+        END ASC) AS CHNL_DV_CD 
+        FROM (
+SELECT REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','') CUST_INFO,
+    		DECODE (LEVEL,1,'S',2,'L',3,'M',4,'K',Level) CHNL_DV_CD,
+    		SYSDATE AS PPRT_DTM
+    		FROM TB_CUST_WHITE_LIST
+    		CONNECT BY LEVEL <![CDATA[<=]]> 4
+    		MINUS
+    		SELECT CUST_INFO, CHNL_DV_CD, SYSDATE AS PPRT_DTM
+    		FROM TB_CUST_WHITE_LIST
+    		WHERE CUST_INFO = REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','')
+    ) GROUP BY CUST_INFO
+	</select>
+	
 	<insert id="insertByText" parameterType="java.lang.String">
 		INSERT INTO TB_CUST_WHITE_LIST(CUST_INFO, CHNL_DV_CD, PPRT_DTM) (
     		SELECT REPLACE(REPLACE(REPLACE(#{custInfo},'-',''),'_',''),' ','') CUST_INFO,

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kbank.yung.dto.AddByTextDto;
-import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.entity.Whitelist;
 import com.kbank.yung.service.WhitelistService;
 import com.kbank.yung.util.PagingVO;
@@ -58,12 +57,15 @@ public class WhitelistController {
 	
 	
 	@RequestMapping("/saveByText")
-	public String saveByText(@ModelAttribute("addByTextDto") AddByTextDto addByTextDto, HttpServletRequest request) {
+	public String saveByText(@ModelAttribute("addByTextDto") AddByTextDto addByTextDto, Model model, HttpServletRequest request) {
 		
-		service.saveByText(addByTextDto);
+		String msg = service.saveByText(addByTextDto);
 		String referer = request.getHeader("Referer");
 		
-		return "redirect:" + referer;
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", referer);
+		
+		return "redirect";
 	}
 	
 	@RequestMapping("/deleteProcess")
