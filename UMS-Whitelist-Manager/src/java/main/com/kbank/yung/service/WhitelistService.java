@@ -131,6 +131,7 @@ public class WhitelistService {
 					logger.info(masked + " : " + code + " 추가 (성공)");
 				} catch (Exception e) {
 					e.printStackTrace();
+					logger.info(masked + " : " + code + " 추가 취소 (중복)");
 				}
 			} else {
 				try {
@@ -138,6 +139,7 @@ public class WhitelistService {
 					logger.info(masked + " : " + code + " 삭제 (성공)");
 				} catch (Exception e) {
 					e.printStackTrace();
+					logger.info(masked + " : " + code + " 삭제 취소 (중복)");
 				}
 			}
 		}
