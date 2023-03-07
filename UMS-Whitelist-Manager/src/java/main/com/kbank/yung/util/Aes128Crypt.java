@@ -72,7 +72,7 @@ public class Aes128Crypt {
 
 	    byte[] encrypted = c.doFinal(str.getBytes("UTF-8"));
 
-	    String enStr = new String(Base64.encodeBase64(encrypted));
+	    String enStr = new String(Base64.encodeBase64URLSafe(encrypted));
 
 
 
