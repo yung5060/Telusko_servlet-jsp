@@ -216,16 +216,16 @@ textarea {
 				<td>생성일</td>
 				<div style="float: right;">
 					<select id="cntPerPage" name="sel" onchange="selChange()">
-						<option value="5"
+						<option value="5">
 							<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄
 							보기</option>
-						<option value="10"
+						<option value="10">
 							<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄
 							보기</option>
-						<option value="15"
+						<option value="15">
 							<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄
 							보기</option>
-						<option value="20"
+						<option value="20">
 							<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
 							보기</option>
 					</select>

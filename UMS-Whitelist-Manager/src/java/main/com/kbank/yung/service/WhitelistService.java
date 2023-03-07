@@ -13,13 +13,12 @@ import com.kbank.yung.dao.WhitelistMapper;
 import com.kbank.yung.dto.AddByTextDto;
 import com.kbank.yung.dto.WhitelistDto;
 import com.kbank.yung.entity.Whitelist;
-import com.kbank.yung.util.Aes256Crypt;
+import com.kbank.yung.util.Aes128Crypt;
 import com.kbank.yung.util.PagingVO;
 
 @Service
 public class WhitelistService {
 	
-	private static final String key = "32fakecodingsecretinyouranykey32";
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -27,7 +26,7 @@ public class WhitelistService {
 	WhitelistMapper mapper;
 	
 	@Autowired
-	Aes256Crypt aes256Crypt;
+	Aes128Crypt aes256Crypt;
 
 	public int countAll() {
 		return mapper.countAll();
@@ -50,7 +49,7 @@ public class WhitelistService {
 			whitelistDto.setCHNL_DV_CD(whitelist.getCHNL_DV_CD());
 			whitelistDto.setCUST_INFO(whitelist.getCUST_INFO());
 			whitelistDto.setPPRT_DTM(whitelist.getPPRT_DTM());
-			whitelistDto.setEncrypted_CUST_INFO(aes256Crypt.aes256Encode(whitelist.getCUST_INFO(), key));
+			whitelistDto.setEncrypted_CUST_INFO(aes256Crypt.encAES(whitelist.getCUST_INFO()));
 			result.add(whitelistDto);
 		}
 		return result;
@@ -92,7 +91,7 @@ public class WhitelistService {
 	}
 
 	public void deleteMemberClean(String custInfo) throws Exception {
-		String phone = aes256Crypt.aes256Decode(custInfo, key);
+		String phone = aes256Crypt.decAES(custInfo);
 		String masked = phone.substring(0, 3) + "-****-" + phone.substring(7, 11);
 		Whitelist whitelist = new Whitelist();
 		whitelist.setCUST_INFO(phone);		
@@ -106,7 +105,7 @@ public class WhitelistService {
 	}
 
 	public void modifyMember(Whitelist whitelist) throws Exception {
-		String phone = aes256Crypt.aes256Decode(whitelist.getCUST_INFO(), key);
+		String phone = aes256Crypt.decAES(whitelist.getCUST_INFO());
 		String masked = phone.substring(0, 3) + "-****-" + phone.substring(7, 11);
 		whitelist.setCUST_INFO(phone);
 		if (whitelist.getCHNL_DV_CD() == null) {
