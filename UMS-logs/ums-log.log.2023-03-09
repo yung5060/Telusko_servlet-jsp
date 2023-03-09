@@ -1,0 +1,3 @@
+23:56:52.597 [http-nio-8080-exec-10] INFO  c.k.yung.service.WhitelistService - 010-****-8367 : 완전 삭제 (성공)
+23:57:08.789 [http-nio-8080-exec-3] INFO  c.k.yung.service.WhitelistService - 010-****-8367 : S,L,M,K 추가 (성공)
+23:58:30.188 [http-nio-8080-exec-6] INFO  c.k.yung.service.WhitelistService - 010-****-8367 : S,L,M,K 추가 (성공)
